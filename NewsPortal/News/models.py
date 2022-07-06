@@ -1,14 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
+class User(AbstractUser):
+    pass
 
 # Create your models here.
 class Author(models.Model):
-    user = models.OneToOneField(on_delete=models.CASCADE)
-    user_rating = models.FloatField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_rating = models.FloatField(default=0.0)
 
-    def update_rating(self):
-        pass
-
+    # def update_rating(self):
+    #     pass
 
 
 class Category(models.Model):
@@ -16,22 +18,30 @@ class Category(models.Model):
 
 
 class Post(models.Model):
-    post_author = models.ForeignKey()
-    post_type = models.ChoiceField()
+    news = 'NE'
+    blog = 'Bl'
+    TYPE_ITEM = [
+        (news, 'Новости'),
+        (blog, 'Блог')
+    ]
+
+    post_author = models.ForeignKey('Author', on_delete=models.CASCADE)
+    post_type = models.CharField(max_length=2,
+                                 choices=TYPE_ITEM,
+                                 default=news)
     post_date = models.DateField(auto_now_add=True)
-    post_category = models.ManyToManyField()
+    post_category = models.ManyToManyField('Category', through='PostCategory')
     post_header = models.CharField(max_length=125)
     post_text = models.TextField()
-    _post_raing = models.IntegerField(default=0)
+    _post_rating = models.FloatField(default=0.0)
 
-    @getattr
+    @property
     def post_rating(self):
-        return self._post_raing
+        return self._post_rating
 
-    @post_rating.settr
+    @post_rating.setter
     def post_rating(self, value):
-        self._post_raing = value
-
+        self._post_rating = value
 
     def like(self):
         self.post_rating += 1
@@ -44,28 +54,27 @@ class Post(models.Model):
 
 
 class PostCategory(models.Model):
-    pass
-    # post
-    # category
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
 
 
 class Comment(models.Model):
-    post = models.ForeignKey()
-    user = models.ForeignKey()
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
     comment_text = models.TextField()
     comment_date = models.DateTimeField(auto_now_add=True)
     _comment_rating = models.IntegerField(default=0)
 
-    @getattr
-    def comment_rating(self):
-        return self._comment_rating
-
-    @comment_rating.settr
-    def comment_rating(self, value):
-        self._comment_rating = value
-
-    def like(self):
-        self.comment_rating += 1
-
-    def dislike(self):
-        self.comment_rating -= 1
+    # @getattr
+    # def comment_rating(self):
+    #     return self._comment_rating
+    #
+    # @comment_rating.settr
+    # def comment_rating(self, value):
+    #     self._comment_rating = value
+    #
+    # def like(self):
+    #     self.comment_rating += 1
+    #
+    # def dislike(self):
+    #     self.comment_rating -= 1
