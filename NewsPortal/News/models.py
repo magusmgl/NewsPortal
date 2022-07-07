@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class User(AbstractUser):
     pass
+
 
 # Create your models here.
 class Author(models.Model):
@@ -33,7 +35,7 @@ class Post(models.Model):
     post_category = models.ManyToManyField('Category', through='PostCategory')
     post_header = models.CharField(max_length=125)
     post_text = models.TextField()
-    _post_rating = models.FloatField(default=0.0)
+    _post_rating = models.IntegerField(default=0)
 
     @property
     def post_rating(self):
@@ -45,12 +47,14 @@ class Post(models.Model):
 
     def like(self):
         self.post_rating += 1
+        self.save()
 
     def dislike(self):
         self.post_rating -= 1
+        self.save()
 
     def preview(self):
-        return self.post_text[:125] + '...'
+        return self.post_text[:125] + ' ...'
 
 
 class PostCategory(models.Model):
@@ -65,16 +69,18 @@ class Comment(models.Model):
     comment_date = models.DateTimeField(auto_now_add=True)
     _comment_rating = models.IntegerField(default=0)
 
-    # @getattr
-    # def comment_rating(self):
-    #     return self._comment_rating
-    #
-    # @comment_rating.settr
-    # def comment_rating(self, value):
-    #     self._comment_rating = value
-    #
-    # def like(self):
-    #     self.comment_rating += 1
-    #
-    # def dislike(self):
-    #     self.comment_rating -= 1
+    @property
+    def comment_rating(self):
+        return self._comment_rating
+
+    @comment_rating.setter
+    def comment_rating(self, value):
+        self._comment_rating = value
+
+    def like(self):
+        self.comment_rating += 1
+        self.save()
+
+    def dislike(self):
+        self.comment_rating -= 1
+        self.save()
