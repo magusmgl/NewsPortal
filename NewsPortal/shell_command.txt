@@ -1,24 +1,21 @@
 #Создать двух пользователей (с помощью метода User.objects.create_user('username')).
-from News.models import User
+from News.models import *
 User.objects.create(username='magus.mgl', first_name='Максим', email='magus.mgl@gmail.com')
 User.objects.create(username='misterkse', first_name='Ксюша', email='misterkse@mail.ru')
 
 #Создать два объекта модели Author, связанные с пользователями.
-from News.models import Author
 user_1 = User.objects.get(username='magus.mgl')
 user_2 = User.objects.get(username='misterkse')
 Author.objects.create(user=user_1, user_rating=10.0)
 Author.objects.create(user=user_2, user_rating=9.0)
 
 #Добавить 4 категории в модель Category.
-from News.models import Category
 Category.objects.create(category_name='спорт')
 Category.objects.create(category_name='политика')
 Category.objects.create(category_name='культура')
 Category.objects.create(category_name='образование')
 
 #Добавить 2 статьи и 1 новость.
-from News.models import Post
 
 politic_cat = Category.objects.get(category_name='политика')
 education_cat = Category.objects.get(category_name='образование')
@@ -37,7 +34,6 @@ post_2.post_category.add(education_cat, sport_cat)
 post_3.post_category.add(education_cat)
 
 #Создать как минимум 4 комментария к разным объектам модели Post (в каждом объекте должен быть как минимум один комментарий).
-from News.models import Comment
 
 comment_1 = Comment.objects.create(post=post_1,user=user_1,comment_text='Так им, полагаю, весьма неплохо в таком режиме живётся и работается. Офис новый крупный в Сербии, опять же. Можно только порадоваться и немного позавидовать им. Несколько настораживает то, что темпы отъезда растут, не отъедет ли Яндекс в полном составе')
 comment_2 = Comment.objects.create(post=post_1,user=user_1,comment_text='Дак дело не в количестве уехавших, а в качестве. В свое время уехал Дуров, Чичваркин и ещё немножко предпринимателей, в плане числа цифра смешная, но сколько страна потеряла в плане человеческого потенциала, сколько налогов, сколько новых технологий теперь будут расти не в России? Валят лучшие, самые активные и предприимчивые, умные и образованные. Средний iq по стране падает. Отрицательная селекция спустилась с верхов в народ. Это ли не чудо.')
@@ -59,3 +55,7 @@ Comment.objects.get(pk=3).like()
 Comment.objects.get(pk=4).dislike()
 
 #Обновить рейтинги пользователей.
+for user in User.objects.all():
+    Author.update_rating(user)
+
+#Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).

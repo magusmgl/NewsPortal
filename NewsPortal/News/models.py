@@ -9,45 +9,25 @@ class User(AbstractUser):
 
 
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='author')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
     user_rating = models.FloatField(default=0.0, db_column='rating')
-
-    @classmethod
-    def get_rating_post_author(cls, user):
-        return user.author.posts.aggregate(rating=Sum('_post_rating'))['rating']
-
-    @classmethod
-    def get_rating_comment_author(cls, user):
-        return user.comments.aggregate(rating=Sum('_comment_rating'))['rating']
-
-    @classmethod
-    def get_rating_comment_for_post_author(cls, user):
-        rating = 0
-        for post in user.author.posts.all():
-            rating += post.comments.aggregate(rating=Sum('_comment_rating'))['rating']
-        return rating
 
     @staticmethod
     def update_rating(user):
-        r_1 = user.author.posts.aggregate(rating=Sum('_post_rating'))['rating']
-        r_2 = user.comments.aggregate(rating=Sum('_comment_rating'))['rating']
-        r_3 = 0
-        for post in user.author.posts.all():
-            r_3 += post.comments.aggregate(rating=Sum('_comment_rating'))['rating']
-        user.author.user_rating = r_1*3 + r_2 + r_3
+        rating_post_author = rating_comment_author = rating_comment_for_post_author = 0
 
+        if user.author.posts.exists():
+            rating_post_author = user.author.posts.aggregate(rating=Sum('_post_rating'))['rating']
 
+        if user.comments.exists():
+            rating_comment_author = user.comments.aggregate(rating=Sum('_comment_rating'))['rating']
 
-    # def update_rating(self, user):
-    #     rating_post_author = self.get_rating_post_author(user)
-    #     print(f'rating_post_author {rating_post_author}')
-    #     rating_comment_author = self.get_rating_comment_author(user)
-    #     print(f'rating_comment_author  {rating_comment_author}')
-    #     rating_comment_for_post_author = self.get_rating_comment_for_post_author()
-    #     print(f'rating_comment_for_post_author {rating_comment_for_post_author}')
-    #     self.user_rating = rating_post_author * 3 + rating_comment_author + rating_comment_for_post_author
-    #     return self.user_rating
-    #     # self.save()
+        if user.author.posts.exists():
+            for post in user.author.posts.all():
+                rating_comment_for_post_author += post.comments.aggregate(rating=Sum('_comment_rating'))['rating']
+
+        user.author.user_rating = rating_post_author * 3 + rating_comment_author + rating_comment_for_post_author
+        user.author.save()
 
 
 class Category(models.Model):
