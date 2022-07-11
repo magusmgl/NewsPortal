@@ -59,3 +59,12 @@ for user in User.objects.all():
     Author.update_rating(user)
 
 #Вывести username и рейтинг лучшего пользователя (применяя сортировку и возвращая поля первого объекта).
+Author.objects.order_by('-user_rating').values('user__username','user_rating').first()
+
+#Вывести дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи, основываясь на лайках/дислайках к этой статье.
+p = Post.objects.order_by('-_post_rating').first()
+p.post_date, p.post_author.user, p._post_rating, p.post_header, p.preview
+
+#Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье
+Comment.objects.filter(post__pk=Post.objects.order_by('_post_rating').first().id).values('comment_date', 'user__username','_comment_rating','comment_text')
+

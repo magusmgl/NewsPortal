@@ -14,19 +14,19 @@ class Author(models.Model):
 
     @staticmethod
     def update_rating(user):
-        rating_post_author = rating_comment_author = rating_comment_for_post_author = 0
+        rating_posts_user = rating_comments_user = rating_comments_on_post_user = 0
 
-        if user.author.posts.exists():
-            rating_post_author = user.author.posts.aggregate(rating=Sum('_post_rating'))['rating']
+        if user.author.posts.all().exists():
+            rating_posts_user = user.author.posts.aggregate(rating=Sum('_post_rating'))['rating']
 
-        if user.comments.exists():
-            rating_comment_author = user.comments.aggregate(rating=Sum('_comment_rating'))['rating']
+        if user.comments.all().exists():
+            rating_comments_user = user.comments.aggregate(rating=Sum('_comment_rating'))['rating']
 
-        if user.author.posts.exists():
+        if user.author.posts.all().exists():
             for post in user.author.posts.all():
-                rating_comment_for_post_author += post.comments.aggregate(rating=Sum('_comment_rating'))['rating']
+                rating_comments_on_post_user += post.comments.aggregate(rating=Sum('_comment_rating'))['rating']
 
-        user.author.user_rating = rating_post_author * 3 + rating_comment_author + rating_comment_for_post_author
+        user.author.user_rating = rating_posts_user * 3 + rating_comments_user + rating_comments_on_post_user
         user.author.save()
 
 
@@ -62,6 +62,7 @@ class Post(models.Model):
     @post_rating.setter
     def post_rating(self, value):
         self._post_rating = value
+        self.save()
 
     def like(self):
         self.post_rating += 1
@@ -94,6 +95,7 @@ class Comment(models.Model):
     @comment_rating.setter
     def comment_rating(self, value):
         self._comment_rating = value
+        self.save()
 
     def like(self):
         self.comment_rating += 1
