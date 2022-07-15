@@ -10,7 +10,7 @@ class User(AbstractUser):
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
-    user_rating = models.FloatField(default=0.0, db_column='rating')
+    user_rating = models.SmallIntegerField(default=0, db_column='rating')
 
     @staticmethod
     def update_rating(user):
@@ -36,10 +36,10 @@ class Category(models.Model):
 
 class Post(models.Model):
     news = 'NE'
-    blog = 'Bl'
+    article = 'AR'
     TYPE_ITEM = [
         (news, 'Новости'),
-        (blog, 'Блог')
+        (article, 'Статья')
     ]
 
     post_author = models.ForeignKey('Author',
@@ -51,9 +51,9 @@ class Post(models.Model):
                                  default=news)
     post_date = models.DateField(auto_now_add=True, db_column='date')
     post_category = models.ManyToManyField('Category', through='PostCategory', db_column='category')
-    post_header = models.CharField(max_length=125, db_column='header')
+    post_title = models.CharField(default='', max_length=128, db_column='header')
     post_text = models.TextField(db_column='text')
-    _post_rating = models.IntegerField(default=0, db_column='rating')
+    _post_rating = models.SmallIntegerField(default=0, db_column='rating')
 
     @property
     def post_rating(self):
@@ -73,7 +73,7 @@ class Post(models.Model):
         self.save()
 
     def preview(self):
-        return self.post_text[:125] + ' ...'
+        return f'{self.post_text[:123]} ...'
 
 
 class PostCategory(models.Model):
