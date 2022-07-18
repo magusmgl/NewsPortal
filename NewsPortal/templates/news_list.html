@@ -1,5 +1,7 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
+
 {% block title %}
 Новости
 {% endblock title %}
@@ -14,8 +16,8 @@
             <li>
 
                 <p>{{ news.date|date:'d.m.Y' }}</p>
-                <h3>{{ news.title }}</h3>
-                <p>{{ news.text|truncatewords:20 }}</p>
+                <h3>{{ news.title|censor }}</h3>
+                <p>{{ news.text|truncatewords:20|censor}}</p>
             </li>
             {% endfor %}
         </ul>
