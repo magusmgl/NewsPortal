@@ -1,0 +1,16 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+    <h3> {{ news.title }}</h3>
+    <div>
+        <p>{{ news.date|date:'d.m.Y'}}</p>
+    </div>
+    <div>
+        <p>{{ news.text|censor }}</p>
+    </div>
+{% endblock content %}
+
