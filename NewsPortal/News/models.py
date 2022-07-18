@@ -42,17 +42,17 @@ class Post(models.Model):
         (article, 'Статья')
     ]
 
-    post_author = models.ForeignKey('Author',
-                                    on_delete=models.CASCADE,
-                                    db_column='author',
-                                    related_name='posts')
-    post_type = models.CharField(max_length=2,
-                                 choices=TYPE_ITEM,
-                                 default=news)
-    post_date = models.DateField(auto_now_add=True, db_column='date')
-    post_category = models.ManyToManyField('Category', through='PostCategory', db_column='category')
-    post_title = models.CharField(default='', max_length=128, db_column='header')
-    post_text = models.TextField(db_column='text')
+    author = models.ForeignKey('Author',
+                               on_delete=models.CASCADE,
+                               db_column='author',
+                               related_name='posts')
+    type = models.CharField(max_length=2,
+                            choices=TYPE_ITEM,
+                            default=news)
+    date = models.DateField(auto_now_add=True, db_column='date')
+    category = models.ManyToManyField('Category', through='PostCategory', db_column='category')
+    title = models.CharField(default='', max_length=128, db_column='header')
+    text = models.TextField(db_column='text')
     _post_rating = models.SmallIntegerField(default=0, db_column='rating')
 
     @property
@@ -73,7 +73,7 @@ class Post(models.Model):
         self.save()
 
     def preview(self):
-        return f'{self.post_text[:123]} ...'
+        return f'{self.text[:123]} ...'
 
 
 class PostCategory(models.Model):
