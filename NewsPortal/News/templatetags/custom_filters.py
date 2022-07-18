@@ -1,17 +1,14 @@
 from django import template
-import pymorphy2
 
 register = template.Library()
+CENSOR_WORD = ['спецоперации', 'релокации', 'компании', 'россии', 'excel', 'яндекса']
+
 
 @register.filter(name='censor')
-def censor(text: str, censor_word=['спецоперации', 'релокации', 'компания', 'Россия']) -> str:
-    words = text.split()
-    for i in range(len(words)):
-        if normalized_word(words[i].lower()) in censor_word:
-            words[i] = "*" * len(words[i])
-    return " ".join(words)
+def censor(value: str, censored_words=CENSOR_WORD) -> str:
+    for word in map(lambda x: x.lower(), censored_words):
+        value = value.replace(word, f'{word[0]}{"*" * (len(word) - 1)}')
 
-def normalized_word(word:str):
-    word.strip()
-    morph = pymorphy2.MorphAnalyzer()
-    return morph.parse(word)[0].normal_form
+    for word in map(lambda x: x.capitalize(), censored_words):
+        value = value.replace(word, f'{word[0]}{"*" * (len(word) - 1)}')
+    return value
