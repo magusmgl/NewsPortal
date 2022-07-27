@@ -5,11 +5,11 @@ from .models import Post
 
 # Create your views here.
 class NewsList(ListView):
-    # model = Post
-    # ordering = 'post_date'
-    queryset = Post.objects.order_by('-date')
+    model = Post
+    ordering = '-date'
     template_name = 'news_list.html'
     context_object_name = 'news_list'
+    paginate_by = 1
 
 
 class NewsDetail(DetailView):
