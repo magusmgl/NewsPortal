@@ -36,7 +36,9 @@
                 {% endif %}
 
                 <span class="current">
-                    {{ page_obj.number }}
+                     {% if paginator.num_pages > 1 %}
+                        {{ page_obj.number }}
+                    {% endif %}
                 </span>
 
                 {% if page_obj.has_next %}
