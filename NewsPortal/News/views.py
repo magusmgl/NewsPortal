@@ -12,14 +12,14 @@ from .forms import PostForm, ArticleForm
 class NewsList(ListView):
     model = Post
     ordering = '-date'
-    template_name = 'news_list.html'
+    template_name = 'news/news_list.html'
     context_object_name = 'news_list'
     paginate_by = 10
 
 
 class NewsDetail(DetailView):
     model = Post
-    template_name = 'news.html'
+    template_name = 'news/news.html'
     context_object_name = 'news'
     pk_url_kwarg = 'id'
 
@@ -27,7 +27,7 @@ class NewsDetail(DetailView):
 class NewsSearch(ListView):
     model = Post
     ordering = '-date'
-    template_name = 'news_search.html'
+    template_name = 'news/news_search.html'
     context_object_name = 'news_list'
     paginate_by = 10
 
@@ -45,7 +45,7 @@ class NewsSearch(ListView):
 class NewsCreate(CreateView):
     form_class = PostForm
     model = Post
-    template_name = 'news_edit.html'
+    template_name = 'news/news_edit.html'
 
     def form_valid(self, form):
         news = form.save(commit=False)
@@ -56,19 +56,19 @@ class NewsCreate(CreateView):
 class NewsEdit(UpdateView):
     form_class = PostForm
     model = Post
-    template_name = 'news_edit.html'
+    template_name = 'news/news_edit.html'
 
 
 class NewsDelete(DeleteView):
     model = Post
-    template_name = 'news_delete.html'
+    template_name = 'news/news_delete.html'
     success_url = reverse_lazy('news_list')
 
 
 class ArticleCreate(CreateView):
     form_class = ArticleForm
     model = Post
-    template_name = 'news_edit.html'
+    template_name = 'news/news_edit.html'
 
     def form_valid(self, form):
         news = form.save(commit=False)
