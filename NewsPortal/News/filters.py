@@ -1,15 +1,20 @@
 import django_filters
 from django.db import models
 
-from .models import Post
+from .models import Post, Category
 from django import forms
 
 
 class NewsFilter(django_filters.FilterSet):
-    title = django_filters.CharFilter(field_name='title', label='По заголовкам ')
-    category__category_name = django_filters.CharFilter(label='По разделу ')
-    type = django_filters.CharFilter(label='По типу ')
-    date = django_filters.DateFilter(field_name='date', lookup_expr='gte', label='Дата написания от ',
+    title = django_filters.CharFilter(field_name='title',
+                                      label='По заголовкам',
+                                      lookup_expr='icontains')
+    category__category_name = django_filters.ModelMultipleChoiceFilter(queryset=Category.objects.all(),
+                                                                       label='По категории',
+                                                                       to_field_name='category_name')
+    date = django_filters.DateFilter(field_name='date',
+                                     lookup_expr='gte',
+                                     label='Дата написания от ',
                                      widget=forms.DateInput(attrs={
                                          'type': 'date',
                                          'id': 'start',
@@ -19,13 +24,4 @@ class NewsFilter(django_filters.FilterSet):
 
     class Meta:
         model = Post
-        fields = ['title', 'category__category_name', 'date', 'type']
-
-        filter_overrides = {
-            models.CharField: {
-                'filter_class': django_filters.CharFilter,
-                'extra': lambda f: {
-                    'lookup_expr': 'icontains',
-                },
-            }
-        }
+        fields = ['title', 'category__category_name', 'date']

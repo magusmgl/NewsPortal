@@ -5,12 +5,16 @@ from django.db.models import Sum
 
 # Create your models here.
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return self.get_full_name()
 
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
     user_rating = models.SmallIntegerField(default=0, db_column='rating')
+
+    def __str__(self):
+        return User.get_full_name(self.user)
 
     @staticmethod
     def update_rating(user):
@@ -32,6 +36,9 @@ class Author(models.Model):
 
 class Category(models.Model):
     category_name = models.CharField(max_length=64, unique=True, db_column='name')
+
+    def __str__(self):
+        return self.category_name.title()
 
 
 class Post(models.Model):
@@ -74,6 +81,10 @@ class Post(models.Model):
 
     def preview(self):
         return f'{self.text[:123]} ...'
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('news', kwargs={'id': self.id})
 
 
 class PostCategory(models.Model):

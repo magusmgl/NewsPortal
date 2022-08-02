@@ -15,10 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import NewsList, NewsDetail, NewsSearch
+
+from .views import NewsList, NewsDetail, NewsSearch, NewsCreate, NewsEdit, NewsDelete, ArticleCreate
 
 urlpatterns = [
     path('', NewsList.as_view(), name='news_list'),
     path('<int:id>', NewsDetail.as_view(), name='news'),
-    path('search', NewsSearch.as_view(), name='news_search')
+    path('search', NewsSearch.as_view(), name='news_search'),
+    path('news/create', NewsCreate.as_view(), name='news_create'),
+    path('news/<int:pk>/edit', NewsEdit.as_view(), name='news_update'),
+    path('news/<int:pk>/delete', NewsDelete.as_view(), name='news_delete'),
+    path('artcle/create', ArticleCreate.as_view(), name='atricle_create'),
+    path('article/<int:pk>/edit', NewsEdit.as_view(), name='news_update'),
+    path('article/<int:pk>/delete', NewsDelete.as_view(), name='news_delete'),
 ]

@@ -15,7 +15,7 @@
             {% for news in news_list %}
             <li>
                 <p>{{ news.date|date:'d.m.Y' }}</p>
-                <h3>{{ news.title|censor }}</h3>
+                <h3><a href="{{ news.get_absolute_url }}">{{ news.title|censor }}</a></h3>
                 <p>{{ news.text|truncatewords:20|censor }}</p>
             </li>
             {% endfor %}
@@ -37,7 +37,7 @@
 
                 <span class="current">
                      {% if paginator.num_pages > 1 %}
-                        {{ page_obj.number }}
+                        <strong>{{ page_obj.number }}</strong>
                     {% endif %}
                 </span>
 
