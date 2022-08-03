@@ -8,7 +8,7 @@ from .models import Post, Category, Author, User
 class PostForm(forms.ModelForm):
     author = forms.ModelChoiceField(queryset=Author.objects.all(),
                                     label='Автор поста',
-                                    empty_label='-- Выберите автора --',)
+                                    empty_label='-- Выберите автора --', )
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
                                               label='Категория поста', widget=SelectMultiple(attrs={'multiple': True}))
     title = forms.CharField(min_length=15, max_length=150, label='Заголовок поста')
@@ -35,7 +35,7 @@ class PostForm(forms.ModelForm):
 class ArticleForm(forms.ModelForm):
     author = forms.ModelChoiceField(queryset=Author.objects.all(),
                                     label='Автор поста',
-                                    empty_label='-- Выберите автора --',)
+                                    empty_label='-- Выберите автора --', )
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
                                               label='Категория поста', widget=SelectMultiple(attrs={'multiple': True}))
     title = forms.CharField(min_length=15, max_length=150, label='Заголовок поста')
@@ -57,3 +57,19 @@ class ArticleForm(forms.ModelForm):
         if title == text:
             raise ValidationError('Текст поста не должен быть идетичен заголовку.')
         return clean_data
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        username = forms.CharField(label='Имя пользователя')
+        first_name = forms.CharField(label='Имя')
+        last_name = forms.CharField(label='Фамилия')
+        email = forms.EmailField(label='Электронная почта')
+
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        ]

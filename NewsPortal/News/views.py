@@ -2,10 +2,11 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Post
+from .models import Post, User
 from .filters import NewsFilter
-from .forms import PostForm, ArticleForm
+from .forms import PostForm, ArticleForm, ProfileForm
 
 
 # Create your views here.
@@ -74,3 +75,8 @@ class ArticleCreate(CreateView):
         news = form.save(commit=False)
         news.type = 'AR'
         return super().form_valid(form)
+
+class EditProfile(LoginRequiredMixin, UpdateView):
+    form_class = ProfileForm
+    model = User
+    template_name = 'news/profile_edit.html'
