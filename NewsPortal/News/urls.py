@@ -19,9 +19,9 @@ from django.urls import path, include
 from .views import NewsList, NewsDetail, NewsSearch, NewsCreate, NewsEdit, NewsDelete, ArticleCreate
 
 urlpatterns = [
-    path('', NewsList.as_view(), name='news_list'),
-    path('<int:id>', NewsDetail.as_view(), name='news'),
-    path('search', NewsSearch.as_view(), name='news_search'),
+    path('news/', NewsList.as_view(), name='news_list'),
+    path('news/<int:id>', NewsDetail.as_view(), name='news'),
+    path('news/search', NewsSearch.as_view(), name='news_search'),
     path('news/create', NewsCreate.as_view(), name='news_create'),
     path('news/<int:pk>/edit', NewsEdit.as_view(), name='news_update'),
     path('news/<int:pk>/delete', NewsDelete.as_view(), name='news_delete'),
