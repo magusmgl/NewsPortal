@@ -142,8 +142,9 @@ STATICFILES_DIRS = [
 ]
 AUTH_USER_MODEL = 'News.User'
 
-LOGIN_REDIRECT_URL = '/profile/'
-LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/profile'
+LOGIN_URL = '/accounts/login'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/news'
 
 # allauth settings
 ACCOUNT_EMAIL_REQUIRED = True
