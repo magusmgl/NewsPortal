@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{% block head_title %}{% endblock head_title %}</title>
-    </head>
-    <body>
-        {% block body %}
-        {% block content %}
-        {% endblock content %}
-        {% endblock body %}
-        {% block extra_body %}
-        {% endblock extra_body %}
-    </body>
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+
+    {% if messages %}
+    <div>
+      <strong>Войти в кабинет:</strong>
+      <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div>
+      <strong>Меню:</strong>
+      <ul>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}">Изменить E-mail</a></li>
+        <li><a href="{% url 'account_logout' %}">Выйти</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}">Войти</a></li>
+        <li><a href="{% url 'account_signup' %}">Зарегистироваться</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    {% block content %}
+    {% endblock %}
+    {% endblock %}
+    {% block extra_body %}
+    {% endblock %}
+  </body>
 </html>
