@@ -2,10 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-
 
 from .models import Post, User
 from .filters import NewsFilter
@@ -46,7 +45,8 @@ class NewsSearch(ListView):
         return context
 
 
-class NewsCreate(CreateView):
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('News.add_post')
     form_class = PostForm
     model = Post
     template_name = 'news/news_edit.html'
@@ -57,19 +57,22 @@ class NewsCreate(CreateView):
         return super().form_valid(form)
 
 
-class NewsEdit(UpdateView):
+class NewsEdit(PermissionRequiredMixin, UpdateView):
+    permission_required = ('News.change_post')
     form_class = PostForm
     model = Post
     template_name = 'news/news_edit.html'
 
 
-class NewsDelete(DeleteView):
+class NewsDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('News.delete_post')
     model = Post
     template_name = 'news/news_delete.html'
     success_url = reverse_lazy('news_list')
 
 
-class ArticleCreate(CreateView):
+class ArticleCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('News.add_post')
     form_class = ArticleForm
     model = Post
     template_name = 'news/news_edit.html'
@@ -99,6 +102,7 @@ class EditProfile(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(User, pk=self.request.user.pk)
+
 
 @login_required()
 def make_author(request):
