@@ -1,8 +1,11 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+
 
 from .models import Post, User
 from .filters import NewsFilter
@@ -76,7 +79,31 @@ class ArticleCreate(CreateView):
         news.type = 'AR'
         return super().form_valid(form)
 
+
+class ProfileDetail(LoginRequiredMixin, DetailView):
+    template_name = 'news/profile.html'
+    context_object_name = 'profile'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(User, pk=self.request.user.pk)
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileDetail, self).get_context_data(**kwargs)
+        context['is_not_author'] = not self.request.user.groups.filter(name='authors').exists()
+        return context
+
+
 class EditProfile(LoginRequiredMixin, UpdateView):
     form_class = ProfileForm
-    model = User
     template_name = 'news/profile_edit.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(User, pk=self.request.user.pk)
+
+@login_required()
+def make_author(request):
+    user = request.user
+    author_group = Group.objects.get(name='authors')
+    if not request.user.groups.filter(name='author').exists():
+        author_group.user_set.add(user)
+    return redirect('/profile/')
