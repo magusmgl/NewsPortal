@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import NewsList, NewsDetail, NewsSearch, NewsCreate, NewsEdit, NewsDelete, ArticleCreate, EditProfile
+from .views import NewsList, NewsDetail, NewsSearch, NewsCreate, NewsEdit, NewsDelete, ArticleCreate, EditProfile, \
+    ProfileDetail, make_author
 
 urlpatterns = [
     path('news/', NewsList.as_view(), name='news_list'),
@@ -28,5 +29,7 @@ urlpatterns = [
     path('artcle/create', ArticleCreate.as_view(), name='atricle_create'),
     path('article/<int:pk>/edit', NewsEdit.as_view(), name='news_update'),
     path('article/<int:pk>/delete', NewsDelete.as_view(), name='news_delete'),
-    path('profile/<int:pk>/edit', EditProfile.as_view(), name='profile_edit'),
+    path('profile/', ProfileDetail.as_view(), name='profile'),
+    path('profile/edit', EditProfile.as_view(), name='profile_edit'),
+    path('profile/upgrade', make_author, name='make_author')
 ]
