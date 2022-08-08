@@ -1,8 +1,8 @@
-from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import Textarea, SelectMultiple
-from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
+from allauth.account.forms import SignupForm
+from django import forms
 
 from .models import Post, Category, Author, User
 
@@ -75,6 +75,7 @@ class ProfileForm(forms.ModelForm):
             'last_name',
             'email',
         ]
+
 
 class BasicSignupForm(SignupForm):
 
