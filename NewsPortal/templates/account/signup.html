@@ -7,7 +7,15 @@
 {% block content %}
 <h1>{% trans "Зарегистрироваться" %}</h1>
 
-<p>{% blocktrans %}У вас уже есть аккаунт? Тогда, пожалуйста,  <a href="{{ login_url }}">войдите</a>.{% endblocktrans %}</p>
+Пожалуйста, зарегистрируйтесь с помощью одной из ваших существующих сторонних учетных записей:
+<div class="socialaccount_ballot">
+  <ul class="socialaccount_providers">
+    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+  </ul>
+  <div class="login-or">{% trans 'или' %}</div>
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
@@ -18,4 +26,5 @@
   <button type="submit">{% trans "Зарегистрироваться" %}</button>
 </form>
 
+<p>{% blocktrans %}У вас уже есть аккаунт? Тогда, пожалуйста,  <a href="{{ login_url }}">войдите</a>.{% endblocktrans %}</p>
 {% endblock %}
