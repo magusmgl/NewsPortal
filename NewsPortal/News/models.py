@@ -12,13 +12,26 @@ class User(AbstractUser):
         from django.urls import reverse
         return reverse('profile')
 
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
 
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
-    user_rating = models.SmallIntegerField(default=0, db_column='rating')
+    user = models.OneToOneField(to=User,
+                                on_delete=models.CASCADE,
+                                related_name='author',
+                                verbose_name='Пользователь')
+    user_rating = models.SmallIntegerField(default=0,
+                                           db_column='rating',
+                                           verbose_name='Рейтинг пользователя')
 
     def __str__(self):
         return User.get_full_name(self.user)
+
+    class Meta:
+        verbose_name = 'Автор'
+        verbose_name_plural = 'Авторы'
 
     @staticmethod
     def update_rating(user):
@@ -39,11 +52,19 @@ class Author(models.Model):
 
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=64, unique=True, db_column='name')
+    category_name = models.CharField(max_length=64,
+                                     unique=True,
+                                     db_column='name',
+                                     verbose_name='Имя категории')
     subscribers = models.ManyToManyField('User', through='CategorySubcribes', db_column='category')
 
     def __str__(self):
         return self.category_name.title()
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering =  ['category_name']
 
 
 class Post(models.Model):
@@ -54,18 +75,38 @@ class Post(models.Model):
         (article, 'Статья')
     ]
 
-    author = models.ForeignKey('Author',
+    author = models.ForeignKey(to='Author',
                                on_delete=models.CASCADE,
                                db_column='author',
-                               related_name='posts')
+                               related_name='posts',
+                               verbose_name='Автор')
     type = models.CharField(max_length=2,
                             choices=TYPE_ITEM,
-                            default=news)
-    date = models.DateField(auto_now_add=True, db_column='date')
-    category = models.ManyToManyField('Category', through='PostCategory', db_column='category')
-    title = models.CharField(default='', max_length=128, db_column='header')
-    text = models.TextField(db_column='text')
-    _post_rating = models.SmallIntegerField(default=0, db_column='rating')
+                            default=news,
+                            verbose_name='Тип')
+    date = models.DateField(auto_now_add=True,
+                            db_column='date',
+                            verbose_name='Дата')
+    category = models.ManyToManyField(to='Category',
+                                      through='PostCategory',
+                                      db_column='category',
+                                      verbose_name='Категория')
+    title = models.CharField(default='',
+                             max_length=128,
+                             db_column='header',
+                             verbose_name='Заголовок')
+    text = models.TextField(db_column='text', verbose_name='Текст поста')
+    _post_rating = models.SmallIntegerField(default=0,
+                                            db_column='rating',
+                                            verbose_name='Рейтинг поста')
+
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
+        ordering = ['date']
+
+    def __str__(self):
+        return f'{self.author}: {self.text[:100]}'
 
     @property
     def post_rating(self):
@@ -93,13 +134,13 @@ class Post(models.Model):
 
 
 class PostCategory(models.Model):
-    post = models.ForeignKey('Post', on_delete=models.CASCADE)
-    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    post = models.ForeignKey(to='Post', on_delete=models.CASCADE)
+    category = models.ForeignKey(to='Category', on_delete=models.CASCADE)
 
 
 class Comment(models.Model):
-    post = models.ForeignKey('Post', on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(to='Post', on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(to='User', on_delete=models.CASCADE, related_name='comments')
     comment_text = models.TextField(db_column='text')
     comment_date = models.DateTimeField(auto_now_add=True, db_column='date')
     _comment_rating = models.IntegerField(default=0, db_column='rating')
