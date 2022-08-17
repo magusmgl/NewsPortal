@@ -56,7 +56,7 @@ class Category(models.Model):
                                      unique=True,
                                      db_column='name',
                                      verbose_name='Имя категории')
-    subscribers = models.ManyToManyField('User', through='CategorySubcribes', db_column='category')
+    subscribers = models.ManyToManyField(to='User', through='CategorySubcribes', db_column='category')
 
     def __str__(self):
         return self.category_name.title()
@@ -165,11 +165,11 @@ class Comment(models.Model):
 
 class CategorySubcribes(models.Model):
     """ Модель ПОДПИСКИ на КАТЕОРИЮ """
-    subcribe_user = models.ForeignKey('User',
+    subcribe_user = models.ForeignKey(to='User',
                                       null=True,
                                       on_delete=models.SET_NULL,
                                       verbose_name='Подписчик')
-    category = models.ForeignKey('Category',
+    category = models.ForeignKey(to='Category',
                                  null=True,
                                  on_delete=models.SET_NULL,
                                  verbose_name='Категория')
