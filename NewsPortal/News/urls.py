@@ -16,19 +16,20 @@ Including another URLconf
 from django.urls import path
 
 from .views import NewsList, NewsDetail, NewsSearch, NewsCreate, NewsEdit, NewsDelete, ArticleCreate, EditProfile, \
-    ProfileDetail, make_author
+    ProfileDetail, make_author, subscribe_to_news_category
 
 urlpatterns = [
     path('news/', NewsList.as_view(), name='news_list'),
-    path('news/<int:id>', NewsDetail.as_view(), name='news'),
-    path('news/search', NewsSearch.as_view(), name='news_search'),
-    path('news/create', NewsCreate.as_view(), name='news_create'),
-    path('news/<int:pk>/edit', NewsEdit.as_view(), name='news_update'),
-    path('news/<int:pk>/delete', NewsDelete.as_view(), name='news_delete'),
-    path('artcle/create', ArticleCreate.as_view(), name='atricle_create'),
-    path('article/<int:pk>/edit', NewsEdit.as_view(), name='news_update'),
-    path('article/<int:pk>/delete', NewsDelete.as_view(), name='news_delete'),
+    path('news/<int:id>/', NewsDetail.as_view(), name='news'),
+    path('news/<int:post_id>/subcribe', subscribe_to_news_category, name='news_subcribe'),
+    path('news/search/', NewsSearch.as_view(), name='news_search'),
+    path('news/create/', NewsCreate.as_view(), name='news_create'),
+    path('news/<int:pk>/edit/', NewsEdit.as_view(), name='news_update'),
+    path('news/<int:pk>/delete/', NewsDelete.as_view(), name='news_delete'),
+    path('artcle/create/', ArticleCreate.as_view(), name='atricle_create'),
+    path('article/<int:pk>/edit/', NewsEdit.as_view(), name='news_update'),
+    path('article/<int:pk>/delete/', NewsDelete.as_view(), name='news_delete'),
     path('profile/', ProfileDetail.as_view(), name='profile'),
-    path('profile/edit', EditProfile.as_view(), name='profile_edit'),
-    path('profile/upgrade', make_author, name='make_author')
+    path('profile/edit/', EditProfile.as_view(), name='profile_edit'),
+    path('profile/upgrade/', make_author, name='make_author')
 ]

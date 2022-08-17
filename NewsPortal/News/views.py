@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
-from .models import Post, User
+from .models import Post, User, CategorySubcribes, Category
 from .filters import NewsFilter
 from .forms import PostForm, ArticleForm, ProfileForm
 
@@ -107,6 +107,44 @@ class EditProfile(LoginRequiredMixin, UpdateView):
 def make_author(request):
     user = request.user
     author_group = Group.objects.get(name='authors')
-    if not request.user.groups.filter(name='author').exists():
+    if not request.user.groups.filter(name='authors').exists():
         author_group.user_set.add(user)
     return redirect('/profile/')
+
+
+@login_required()
+def subscribe_to_news_category(request, post_id):
+    '''Подписка  пользователя на категории текущей новости и отправка сообщения'''
+    user = request.user
+    post_categories = Category.objects.filter(post=post_id)
+    for category in post_categories:
+        if not user.categorysubcribes_set.filter(category=category).exists():
+            CategorySubcribes.objects.create(subcribe_user=user, category=category)
+
+    context = {
+        'post_id': post_id,
+        'user': user,
+        'subcribes': user.category_set.all(),
+    }
+
+    # получаем HTML
+    # html_content = render_to_string(
+    #     'news/subcribes_create.html',
+    #     {
+    #         'content': {
+    #             'post': Post.objects.get(id=post_id),
+    #             'user_name': user,
+    #         }
+    #     }
+    # )
+    # msg = EmailMultiAlternatives(
+    #     subject=f'Подписка на новости категорий: {", ".join(cat.category_name for cat in post_categories)}.',
+    #     body='content',
+    #     from_email='magus.mgl@mail.ru',
+    #     to=[f'{user.email}'],
+    # )
+    # msg.attach_alternative(html_content, "text/html")  # добавляем html
+    #
+    # msg.send()  # отсылаем
+
+    return render(request, 'news/subcribe.html', context=context)

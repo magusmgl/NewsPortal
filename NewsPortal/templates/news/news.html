@@ -14,5 +14,10 @@
 <div>
     <p>{{ news.text|censor }}</p>
 </div>
+{% if user.is_authenticated %}
+    <div>
+        <button><a href="{% url 'news_subcribe' news.id %}">Подписатся</a></button>
+    </div>
+{% endif %}
 {% endblock content %}
 
