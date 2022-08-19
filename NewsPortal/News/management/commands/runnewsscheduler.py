@@ -37,7 +37,7 @@ def weekly_newsletter_for_subscribers():
         )
 
         msg = EmailMultiAlternatives(
-            subject=f'Новая статья на сайте',
+            subject=f'Еженедельная рассылка новостей от портала Cb.ru',
             from_email='magus.mgl@mail.ru',
             to=[user.email],
         )
