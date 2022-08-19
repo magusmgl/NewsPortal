@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -124,27 +124,7 @@ def subscribe_to_news_category(request, post_id):
     context = {
         'post_id': post_id,
         'user': user,
-        'subcribes': user.category_set.all(),
+        'categories_subscribed': user.category_set.all(),
     }
-
-    # получаем HTML
-    # html_content = render_to_string(
-    #     'news/subcribes_create.html',
-    #     {
-    #         'content': {
-    #             'post': Post.objects.get(id=post_id),
-    #             'user_name': user,
-    #         }
-    #     }
-    # )
-    # msg = EmailMultiAlternatives(
-    #     subject=f'Подписка на новости категорий: {", ".join(cat.category_name for cat in post_categories)}.',
-    #     body='content',
-    #     from_email='magus.mgl@mail.ru',
-    #     to=[f'{user.email}'],
-    # )
-    # msg.attach_alternative(html_content, "text/html")  # добавляем html
-    #
-    # msg.send()  # отсылаем
 
     return render(request, 'news/subcribe.html', context=context)

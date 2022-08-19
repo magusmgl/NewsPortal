@@ -9,7 +9,7 @@
 {% block content %}
 <h3> Уважаемый, {{ user }}!</h3>
 <p>Подписка на следующие категории успешно оформлена:</p>
-{% for category in subcribes %}
+{% for category in categories_subscribed %}
 <ul>
     <li>{{category.category_name|title}}</li>
 </ul>
