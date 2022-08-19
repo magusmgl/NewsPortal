@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'fpages',
-    'News',
+    'News.apps.NewsConfig',
+
     'django_filters',
     'allauth',
     'allauth.account',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.yandex',
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
@@ -151,8 +153,10 @@ ACCOUNT_LOGOUT_REDIRECT_URL = '/news'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTIFICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VRIFICATION = 'mandatory'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+
 
 ACCOUNT_FORMS = {
     'signup': 'News.forms.BasicSignupForm',
@@ -161,3 +165,15 @@ ACCOUNT_FORMS = {
 SOCIALACCOUNT_FORMS = {
     'signup': 'News.socialaccount.forms.MyCustomSocialSignupForm',
 }
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'magus.mgl@mail.ru'
+EMAIL_HOST_PASSWORD = 'N0jSNQBPwRFkhKfmSNh1'
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = 'magus.mgl@mail.ru'
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+# если задача не выполняется за 25 секунд, то она автоматически снимается, можете поставить время побольше, но как правило, это сильно бьёт по производительности сервера
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds

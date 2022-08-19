@@ -56,7 +56,9 @@ class Category(models.Model):
                                      unique=True,
                                      db_column='name',
                                      verbose_name='Имя категории')
-    subscribers = models.ManyToManyField(to='User', through='CategorySubcribes', db_column='category')
+    subscribers = models.ManyToManyField(to='User',
+                                         through='CategorySubcribes',
+                                         db_column='category',)
 
     def __str__(self):
         return self.category_name.title()
