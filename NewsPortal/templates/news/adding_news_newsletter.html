@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Здравствуй, {{ subscribers_name}}. Новая статья в твоём любимом разделе</title>
+</head>
+<body>
+<h2> Здравствуй, {{ subscribers_name }}. Новая статья в твоём любимом разделе</h2>
+<p> Вы подписались на новости: {{ categories }}.</p>
+<div>
+    <p>{{ instance.date|date:'d.m.Y' }}</p>
+    <h3><a href="http://127.0.0.1:8000{% url  'news' instance.id %}">{{ instance.title }}</a></h3>
+    <p>{{ instance.text|truncatewords:50 }}</p>
+</div>
+</body>
+</html>
