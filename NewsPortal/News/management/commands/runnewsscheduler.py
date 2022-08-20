@@ -71,7 +71,7 @@ class Command(BaseCommand):
         scheduler.add_job(
             weekly_newsletter_for_subscribers,
             trigger=CronTrigger(
-                day_of_week='monday', hour='08', minute='00'
+                day_of_week='MON', hour='08', minute='00'
             ),
             id="weekly_newsletter",  # The `id` assigned to each job MUST be unique
             max_instances=1,
