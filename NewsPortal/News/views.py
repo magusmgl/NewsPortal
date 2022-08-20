@@ -8,6 +8,7 @@ from django.contrib.auth.models import Group
 from .models import Post, User, CategorySubcribes, Category
 from .filters import NewsFilter
 from .forms import PostForm, ArticleForm, ProfileForm
+from .tasks import mailing_subscribers_after_news_creation
 
 
 # Create your views here.
@@ -53,6 +54,8 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         news = form.save(commit=False)
         news.type = 'NE'
+        news.save()
+        mailing_subscribers_after_news_creation.delay(post_pk=news.pk)
         return super().form_valid(form)
 
 
