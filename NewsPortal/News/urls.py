@@ -17,10 +17,11 @@ from django.urls import path
 
 from .views import NewsList, NewsDetail, NewsSearch, NewsCreate, NewsEdit, NewsDelete, ArticleCreate, EditProfile, \
     ProfileDetail, make_author, subscribe_to_news_category
+from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path('news/', NewsList.as_view(), name='news_list'),
-    path('news/<int:id>/', NewsDetail.as_view(), name='news'),
+    path('news/<int:id>/', cache_page(timeout=100)(NewsDetail.as_view()), name='news'),
     path('news/<int:post_id>/subcribe', subscribe_to_news_category, name='news_subcribe'),
     path('news/search/', NewsSearch.as_view(), name='news_search'),
     path('news/create/', NewsCreate.as_view(), name='news_create'),
