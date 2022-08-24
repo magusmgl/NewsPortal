@@ -20,8 +20,8 @@ from .views import NewsList, NewsDetail, NewsSearch, NewsCreate, NewsEdit, NewsD
 from django.views.decorators.cache import cache_page
 
 urlpatterns = [
-    path('news/', NewsList.as_view(), name='news_list'),
-    path('news/<int:id>/', cache_page(timeout=100)(NewsDetail.as_view()), name='news'),
+    path('news/', cache_page(timeout=60*1)(NewsList.as_view()), name='news_list'),
+    path('news/<int:id>/', cache_page(timeout=60*5)(NewsDetail.as_view()), name='news'),
     path('news/<int:post_id>/subcribe', subscribe_to_news_category, name='news_subcribe'),
     path('news/search/', NewsSearch.as_view(), name='news_search'),
     path('news/create/', NewsCreate.as_view(), name='news_create'),
