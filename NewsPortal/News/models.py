@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import Sum
+from django.core.cache import cache
 
 
 # Create your models here.
@@ -58,7 +59,7 @@ class Category(models.Model):
                                      verbose_name='Имя категории')
     subscribers = models.ManyToManyField(to='User',
                                          through='CategorySubcribes',
-                                         db_column='category',)
+                                         db_column='category', )
 
     def __str__(self):
         return self.category_name.title()
@@ -66,7 +67,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        ordering =  ['category_name']
+        ordering = ['category_name']
 
 
 class Post(models.Model):
@@ -133,6 +134,10 @@ class Post(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('news', kwargs={'id': self.id})
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'news-{self.id}')
 
 
 class PostCategory(models.Model):

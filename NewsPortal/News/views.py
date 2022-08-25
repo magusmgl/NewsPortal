@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+from django.core.cache import cache
 
 from .models import Post, User, CategorySubcribes, Category
 from .filters import NewsFilter
@@ -25,6 +26,13 @@ class NewsDetail(DetailView):
     template_name = 'news/news.html'
     context_object_name = 'news'
     pk_url_kwarg = 'id'
+
+    def get_object(self, *args, **kwargs):
+        news = cache.get(f'news-{self.kwargs["id"]}', None)
+        if not news:
+            news = super().get_object(queryset=self.queryset)
+            cache.set(f'news-{self.kwargs["id"]}', news)
+        return news
 
 
 class NewsSearch(ListView):
