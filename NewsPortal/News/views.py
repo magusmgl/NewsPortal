@@ -14,6 +14,7 @@ from .tasks import mailing_subscribers_after_news_creation
 
 # Create your views here.
 class NewsList(ListView):
+    '''Представления для вывода списка новостей'''
     model = Post
     ordering = '-date'
     template_name = 'news/news_list.html'
@@ -22,12 +23,16 @@ class NewsList(ListView):
 
 
 class NewsDetail(DetailView):
+    '''Представления для вывода конкретной новости'''
     model = Post
     template_name = 'news/news.html'
     context_object_name = 'news'
     pk_url_kwarg = 'id'
 
-    def get_object(self, *args, **kwargs):
+    def get_object(self, *args, **kwargs) -> None:
+        '''
+        Получение новости из кэша. Если новости в кэше нет, получаем новость из базы и затем сохраняем ее в кэш.
+        '''
         news = cache.get(f'news-{self.kwargs["id"]}', None)
         if not news:
             news = super().get_object(queryset=self.queryset)
@@ -36,6 +41,7 @@ class NewsDetail(DetailView):
 
 
 class NewsSearch(ListView):
+    '''Представления для фильтрации новостей на сайте'''
     model = Post
     ordering = '-date'
     template_name = 'news/news_search.html'
@@ -43,23 +49,27 @@ class NewsSearch(ListView):
     paginate_by = 10
 
     def get_queryset(self):
+        '''Возвращает отфильтрованный запрос'''
         queryset = super().get_queryset()
         self.filterset = NewsFilter(self.request.GET, queryset)
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
+        '''Сохранение отфильтрованного запроса в context'''
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
         return context
 
 
 class NewsCreate(PermissionRequiredMixin, CreateView):
+    '''Представления для создания новостей для авторизованных пользователей'''
     permission_required = ('News.add_post')
     form_class = PostForm
     model = Post
     template_name = 'news/news_edit.html'
 
     def form_valid(self, form):
+        '''При валидации формы сохраняем тип поста: новость'''
         news = form.save(commit=False)
         news.type = 'NE'
         news.save()
@@ -68,6 +78,7 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
 
 
 class NewsEdit(PermissionRequiredMixin, UpdateView):
+    '''Представление для редактирования новости'''
     permission_required = ('News.change_post')
     form_class = PostForm
     model = Post
@@ -75,6 +86,7 @@ class NewsEdit(PermissionRequiredMixin, UpdateView):
 
 
 class NewsDelete(PermissionRequiredMixin, DeleteView):
+    '''Удаление поста'''
     permission_required = ('News.delete_post')
     model = Post
     template_name = 'news/news_delete.html'
@@ -82,40 +94,48 @@ class NewsDelete(PermissionRequiredMixin, DeleteView):
 
 
 class ArticleCreate(PermissionRequiredMixin, CreateView):
+    '''Представления для создания статьи для авторизованных пользователей'''
     permission_required = ('News.add_post')
     form_class = ArticleForm
     model = Post
     template_name = 'news/news_edit.html'
 
     def form_valid(self, form):
+        '''При валидации формы сохраняем тип поста: статья'''
         news = form.save(commit=False)
         news.type = 'AR'
         return super().form_valid(form)
 
 
 class ProfileDetail(LoginRequiredMixin, DetailView):
+    '''Профиль пользователя'''
     template_name = 'news/profile.html'
     context_object_name = 'profile'
 
     def get_object(self, queryset=None):
+        '''Получаем данные пользователя по pk'''
         return get_object_or_404(User, pk=self.request.user.pk)
 
     def get_context_data(self, **kwargs):
+        '''Сохраняем к контексте информацию является ли пользователь автором'''
         context = super(ProfileDetail, self).get_context_data(**kwargs)
         context['is_not_author'] = not self.request.user.groups.filter(name='authors').exists()
         return context
 
 
 class EditProfile(LoginRequiredMixin, UpdateView):
+    '''Редактирования профиля пользователя'''
     form_class = ProfileForm
     template_name = 'news/profile_edit.html'
 
     def get_object(self, queryset=None):
+        '''Получаем данные пользователя по pk'''
         return get_object_or_404(User, pk=self.request.user.pk)
 
 
 @login_required()
 def make_author(request):
+    '''Добавляет юзера в группу авторов'''
     user = request.user
     author_group = Group.objects.get(name='authors')
     if not request.user.groups.filter(name='authors').exists():
@@ -125,7 +145,7 @@ def make_author(request):
 
 @login_required()
 def subscribe_to_news_category(request, post_id):
-    '''Подписка  пользователя на категории текущей новости и отправка сообщения'''
+    '''Подписка  пользователя на категории текущей новости'''
     user = request.user
     post_categories = Category.objects.filter(post=post_id)
     for category in post_categories:
