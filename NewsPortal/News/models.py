@@ -77,7 +77,6 @@ class Category(models.Model):
                                          through='CategorySubcribes',
                                          db_column='category', )
 
-    @property
     def __str__(self):
         '''Возвращает заголок поста/новости'''
         return f'{self.category_name.title()}.'
@@ -87,7 +86,6 @@ class Category(models.Model):
         Добавление названия таблиц в админке и
         сортировка категорий по имени.
         '''
-        verbose_name = 'Автор'
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['category_name']
@@ -167,7 +165,7 @@ class Post(models.Model):
     def get_absolute_url(self) -> str:
         '''Получене абсолютной ссылки на кокрентую статью'''
 
-        return reverse('news', kwargs={'id': self.pk})
+        return reverse('news', kwargs={'id': self.id})
 
     def save(self, *args, **kwargs):
         '''
@@ -175,7 +173,7 @@ class Post(models.Model):
         Удаляет данные статьи из кэша, после ее сохранения/изменения.
         '''
         super().save(*args, **kwargs)
-        cache.delete(f'news-{self.pk}')
+        cache.delete(f'news-{self.id}')
 
 
 class PostCategory(models.Model):
