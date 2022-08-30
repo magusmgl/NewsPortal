@@ -79,7 +79,7 @@ class Category(models.Model):
 
     def __str__(self):
         '''Возвращает заголок поста/новости'''
-        return f'{self.category_name.title()}.'
+        return f'{self.category_name.title()}'
 
     class Meta:
         '''
