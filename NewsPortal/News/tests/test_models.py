@@ -1,7 +1,7 @@
 from django.test import TestCase
 from datetime import datetime
 
-from News.models import User, Author, Category, Post
+from News.models import User, Author, Category, Post, Comment
 
 
 class UserModelTest(TestCase):
@@ -160,5 +160,72 @@ class POstModelTest(TestCase):
         self.assertEqual('/news/1/', post.get_absolute_url())
 
 
+class CommentModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up non-modified objects used by all test methods
+        user = User.objects.create_user(username='ivan1234',
+                                        first_name='ivan',
+                                        last_name='ivianov',
+                                        email="ivan1234@mail.ru",
+                                        password="1234")
+
+        author = Author.objects.create(user=user)
+        category = Category.objects.create(category_name='Политика')
+        post = Post.objects.create(author=author,
+                                   type='NE',
+                                   date=datetime.now(),
+                                   title='политика',
+                                   text='someting text',
+                                   )
+        post.category.add(category)
+        Comment.objects.create(post=post,
+                               user=user,
+                               comment_text='some comment',
+                               comment_date=datetime.now(),
+                               )
+
+    def test_post_name_label(self):
+        comment = Comment.objects.get(id=1)
+        field_label = comment._meta.get_field('post').verbose_name
+        self.assertEqual(field_label, 'Пост')
+
+    def test_user_name_label(self):
+        comment = Comment.objects.get(id=1)
+        field_label = comment._meta.get_field('user').verbose_name
+        self.assertEqual(field_label, 'Пользователь')
+
+    def test_comment_text_name_label(self):
+        comment = Comment.objects.get(id=1)
+        field_label = comment._meta.get_field('comment_text').verbose_name
+        self.assertEqual(field_label, 'Комментарий к посту')
+
+    def test_comment_date_name_label(self):
+        comment = Comment.objects.get(id=1)
+        field_label = comment._meta.get_field('comment_date').verbose_name
+        self.assertEqual(field_label, 'Дата комментария')
+
+    def test_comment_rating_name_label(self):
+        comment = Comment.objects.get(id=1)
+        field_label = comment._meta.get_field('_comment_rating').verbose_name
+        self.assertEqual(field_label, 'Рейтинг комментария')
+
+    def test_increases_comment_rating_on_1(self):
+        comment = Comment.objects.get(id=1)
+        comment.comment_rating = 0
+        comment.like()
+        self.assertEqual(comment.comment_rating, 1)
+
+    def test_reduce_comment_rating_on_1(self):
+        comment = Comment.objects.get(id=1)
+        comment.comment_rating = 2
+        comment.dislike()
+        self.assertEqual(comment.comment_rating, 1)
 
 
+class CategorySubcribesModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Set up non-modified objects used by all test methods
+        # TODO
+        pass

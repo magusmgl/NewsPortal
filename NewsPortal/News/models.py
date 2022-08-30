@@ -184,11 +184,21 @@ class PostCategory(models.Model):
 
 class Comment(models.Model):
     '''Модель комментариев поста'''
-    post = models.ForeignKey(to='Post', on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(to='User', on_delete=models.CASCADE, related_name='comments')
-    comment_text = models.TextField(db_column='text')
-    comment_date = models.DateTimeField(auto_now_add=True, db_column='date')
-    _comment_rating = models.IntegerField(default=0, db_column='rating')
+    post = models.ForeignKey(to='Post',
+                             on_delete=models.CASCADE,
+                             related_name='comments',
+                             verbose_name='Пост')
+    user = models.ForeignKey(to='User',
+                             on_delete=models.CASCADE,
+                             related_name='comments',
+                             verbose_name='Пользователь')
+    comment_text = models.TextField(db_column='text', verbose_name='Комментарий к посту')
+    comment_date = models.DateTimeField(auto_now_add=True,
+                                        db_column='date',
+                                        verbose_name='Дата комментария')
+    _comment_rating = models.IntegerField(default=0,
+                                          db_column='rating',
+                                          verbose_name='Рейтинг комментария')
 
     @property
     def comment_rating(self):
