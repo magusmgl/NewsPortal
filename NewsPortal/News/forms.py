@@ -8,6 +8,7 @@ from .models import Post, Category, Author, User
 
 
 class PostForm(forms.ModelForm):
+    '''Форма поста(новости)'''
     author = forms.ModelChoiceField(queryset=Author.objects.all(),
                                     label='Автор поста',
                                     empty_label='-- Выберите автора --', )
@@ -26,6 +27,7 @@ class PostForm(forms.ModelForm):
         ]
 
     def clean(self):
+        '''Валидация формы: текст поста не должен совпадать с заголовком'''
         clean_data = super().clean()
         title = clean_data.get('title')
         text = clean_data.get('text')
@@ -35,6 +37,7 @@ class PostForm(forms.ModelForm):
 
 
 class ArticleForm(forms.ModelForm):
+    '''Форма поста(статьи)'''
     author = forms.ModelChoiceField(queryset=Author.objects.all(),
                                     label='Автор поста',
                                     empty_label='-- Выберите автора --', )
@@ -53,6 +56,7 @@ class ArticleForm(forms.ModelForm):
         ]
 
     def clean(self):
+        '''Валидация формы: текст поста не должен совпадать с заголовком'''
         clean_data = super().clean()
         title = clean_data.get('title')
         text = clean_data.get('text')
@@ -62,6 +66,7 @@ class ArticleForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
+    '''Форма профиля пользовтеля '''
     class Meta:
         username = forms.CharField(label='Имя пользователя')
         first_name = forms.CharField(label='Имя')
@@ -80,6 +85,7 @@ class ProfileForm(forms.ModelForm):
 class BasicSignupForm(SignupForm):
 
     def save(self, request):
+        '''При регистрации нового пользователя он добавляется в группу common'''
         user = super(BasicSignupForm, self).save(request)
         basic_group = Group.objects.get(name='common')
         basic_group.user_set.add(user)
@@ -88,6 +94,7 @@ class BasicSignupForm(SignupForm):
 
 class MyCustomSocialSignupForm(SignupForm):
     def save(self, request):
+        '''При регистрации нового пользователя он добавляется в группу common'''
         user = super(MyCustomSocialSignupForm, self).save(request)
         basic_group = Group.objects.get(name='common')
         basic_group.user_set.add(user)
