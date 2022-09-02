@@ -18,6 +18,11 @@
     <div>
         <button><a href="{% url 'news_subcribe' news.id %}">Подписатся</a></button>
     </div>
+    <div>
+        <p><a href="{% url 'news_update' news.pk %}">+ Редактировать новость</a></p>
+        <p><a href="{% url 'news_delete' news.pk %}">+ Удалить новость</a></p>
+    </div>
+
 {% endif %}
 {% endblock content %}
 
