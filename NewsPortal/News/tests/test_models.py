@@ -9,11 +9,11 @@ class UserModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        User.objects.create_user(username='ivan1234',
-                                 first_name='ivan',
-                                 last_name='ivianov',
-                                 email="ivan1234@mail.ru",
-                                 password="1234")
+        User.objects.create_user(username='testuser',
+                                 first_name='testuser_name',
+                                 last_name='testuser_last_name',
+                                 email='test@email.com',
+                                 password='secret')
 
     def test_get_absolute_url(self):
         user = User.objects.get(id=1)
@@ -29,11 +29,12 @@ class AuthorModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        user = User.objects.create_user(username='ivan1234', first_name='ivan',
-                                        last_name='ivianov',
-                                        email="ivan1234@mail.ru",
-                                        password="1234")
-        Author.objects.create(user=user, user_rating=9.1231)
+        user = User.objects.create_user(username='testuser',
+                                        first_name='testuser_name',
+                                        last_name='testuser_last_name',
+                                        email='test@email.com',
+                                        password='secret')
+        Author.objects.create(user=user, user_rating=9)
 
     def test_user_name_label(self):
         author = Author.objects.get(id=1)
@@ -65,6 +66,10 @@ class CategoryModelTest(TestCase):
         # Set up non-modified objects used by all test methods
         Category.objects.create(category_name='Политика')
 
+    def test_category_name_content(self):
+        content = Category.objects.get(id=1)
+        self.assertEqual(content.category_name, 'Политика')
+
     def test_category_name_label(self):
         category = Category.objects.get(id=1)
         field_label = category._meta.get_field('category_name').verbose_name
@@ -80,15 +85,16 @@ class CategoryModelTest(TestCase):
         self.assertFalse(len(category.category_name) <= 64)
 
 
-class POstModelTest(TestCase):
+class PostModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        user = User.objects.create_user(username='ivan1234', first_name='ivan',
-                                        last_name='ivianov',
-                                        email="ivan1234@mail.ru",
-                                        password="1234")
+        user = User.objects.create_user(username='testuser',
+                                        first_name='testuser_name',
+                                        last_name='testuser_last_name',
+                                        email='test@email.com',
+                                        password='secret')
         author = Author.objects.create(user=user)
 
         category = Category.objects.create(category_name='Политика')
@@ -125,10 +131,18 @@ class POstModelTest(TestCase):
         field_label = post._meta.get_field('title').verbose_name
         self.assertEqual(field_label, 'Заголовок')
 
+    def test_title_content(self):
+        post = Post.objects.get(id=1)
+        self.assertEqual(post.title, 'политика')
+
     def test_text_name_label(self):
         post = Post.objects.get(id=1)
         field_label = post._meta.get_field('text').verbose_name
         self.assertEqual(field_label, 'Текст поста')
+
+    def test_text_content(self):
+        post = Post.objects.get(id=1)
+        self.assertEqual(post.text, 'someting text')
 
     def test_post_rating_name_label(self):
         post = Post.objects.get(id=1)
@@ -164,13 +178,13 @@ class CommentModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        user = User.objects.create_user(username='ivan1234',
-                                        first_name='ivan',
-                                        last_name='ivianov',
-                                        email="ivan1234@mail.ru",
-                                        password="1234")
-
+        user = User.objects.create_user(username='testuser',
+                                        first_name='testuser_name',
+                                        last_name='testuser_last_name',
+                                        email='test@email.com',
+                                        password='secret')
         author = Author.objects.create(user=user)
+
         category = Category.objects.create(category_name='Политика')
         post = Post.objects.create(author=author,
                                    type='NE',
@@ -199,6 +213,10 @@ class CommentModelTest(TestCase):
         comment = Comment.objects.get(id=1)
         field_label = comment._meta.get_field('comment_text').verbose_name
         self.assertEqual(field_label, 'Комментарий к посту')
+
+    def test_comment_content(self):
+        comment = Comment.objects.get(id=1)
+        self.assertEqual(comment.comment_text, 'some comment')
 
     def test_comment_date_name_label(self):
         comment = Comment.objects.get(id=1)

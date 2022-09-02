@@ -14,7 +14,7 @@ class PostForm(forms.ModelForm):
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
                                               label='Категория поста', widget=SelectMultiple(attrs={'multiple': True}))
     title = forms.CharField(min_length=15, max_length=150, label='Заголовок поста')
-    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label='Текст поста', min_length=200)
+    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label='Текст поста', min_length=100)
 
     class Meta:
         model = Post
@@ -30,7 +30,7 @@ class PostForm(forms.ModelForm):
         title = clean_data.get('title')
         text = clean_data.get('text')
         if title == text:
-            raise ValidationError('Текст поста не должен быть идетичен заголовку.')
+            raise ValidationError('Текст поста не должен быть идентичен заголовку.')
         return clean_data
 
 
@@ -41,7 +41,7 @@ class ArticleForm(forms.ModelForm):
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
                                               label='Категория поста', widget=SelectMultiple(attrs={'multiple': True}))
     title = forms.CharField(min_length=15, max_length=150, label='Заголовок поста')
-    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label='Текст поста', min_length=200)
+    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label='Текст поста', min_length=100)
 
     class Meta:
         model = Post
