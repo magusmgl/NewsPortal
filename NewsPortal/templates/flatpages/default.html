@@ -30,17 +30,30 @@
                             </button>
                             <div class="collapse navbar-collapse" id="navbarResponsive">
                                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/index/">Главная</a></li>
-                                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/">Новости</a></li>
+                                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/">Главная</a></li>
                                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/search/">Поиск</a></li>
-                                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/profile/">Личный кабинет</a></li>
+                {% endcache %}
+                                    {% if perms.News.change_post %}
+                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/create/">Добавить пост</a></li>
+                                    {% endif %}
+                                    {% if user.is_authenticated %}
+                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/profile/">{{ user.username }}</a></li>
+                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/logout">Выйти</a></li>
+
+                                    {% else %}
+                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/login">Войти</a></li>
+                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/signup">Регистрация</a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
                     </nav>
-                {% endcache %}
+
         <!-- Page Header-->
         <header class="masthead" style="background-image: url('{% static 'assets/img/home-bg.jpg' %}')">
+
+            {% cache 100 header %}
+
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
@@ -51,6 +64,9 @@
                     </div>
                 </div>
             </div>
+
+
+            {% endcache %}
         </header>
         <!-- Main Content-->
         <div class="container px-4 px-lg-5">

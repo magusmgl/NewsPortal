@@ -18,11 +18,16 @@
     <div>
         <button><a href="{% url 'news_subcribe' news.id %}">Подписатся</a></button>
     </div>
-    <div>
-        <p><a href="{% url 'news_update' news.pk %}">+ Редактировать новость</a></p>
-        <p><a href="{% url 'news_delete' news.pk %}">+ Удалить новость</a></p>
-    </div>
-
+    {% if perms.News.change_post %}
+        <div>
+            <button><a href="{% url 'news_update' news.pk %}">Редактировать пост</a></button>
+        </div>
+    {% endif %}
+    {% if perms.News.delete_post %}
+        <div>
+            <button><a href="{% url 'news_delete' news.pk %}">+ Удалить новость</a></button>
+        </div>
+    {% endif %}
 {% endif %}
 {% endblock content %}
 
