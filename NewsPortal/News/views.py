@@ -25,7 +25,7 @@ class NewsList(ListView):
 class NewsDetail(DetailView):
     '''Представления для вывода конкретной новости'''
     model = Post
-    template_name = 'news/news.html'
+    template_name = 'news/news_detail.html'
     context_object_name = 'news'
     pk_url_kwarg = 'id'
 
@@ -64,9 +64,9 @@ class NewsSearch(ListView):
 class NewsCreate(PermissionRequiredMixin, CreateView):
     '''Представления для создания новостей для авторизованных пользователей'''
     permission_required = ('News.add_post')
-    form_class = PostForm
     model = Post
-    template_name = 'news/news_edit.html'
+    form_class = PostForm
+    template_name = 'news/news_new.html'
 
     def form_valid(self, form):
         '''При валидации формы сохраняем тип поста: новость'''
@@ -98,7 +98,7 @@ class ArticleCreate(PermissionRequiredMixin, CreateView):
     permission_required = ('News.add_post')
     form_class = ArticleForm
     model = Post
-    template_name = 'news/news_edit.html'
+    template_name = 'news/news_new.html'
 
     def form_valid(self, form):
         '''При валидации формы сохраняем тип поста: статья'''
