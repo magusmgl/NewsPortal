@@ -1,9 +1,10 @@
 {% extends 'flatpages/default.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <h1>Поиск статьей на сайте</h1>
     <form action="" method="GET">
-        {{ filterset.form.as_p }}
+        {{ filterset.form|crispy }}
         <input type="submit" value="Найти">
     </form>
 

@@ -5,20 +5,30 @@
 {% block title %}Новости{% endblock title %}
 
 {% block content %}
-    <h1>Все новости</h1>
-    <h3>Статей на сайте: {{ news_list|length }}</h3>
-    <hr>
+<h1>Все новости</h1>
+<h3>Статей на сайте: {{ news_list|length }}</h3>
+<hr>
 {% if news_list %}
 {% for news in news_list %}
-    <div class="news-entry">
-        <p>{{ news.date|date:'d.m.Y' }}</p>
-        <h3><a href="{{ news.get_absolute_url }}">{{ news.title|censor }}</a></h3>
+<div class="card">
+    <div class="card-header">
+        <span class="font-weight-bold"><a href="{{ news.get_absolute_url }}">{{ news.title|censor }}</a></span>&middot;
+        <span class="text-muted">{{ news.author }} |
+                {{news.date|date:'d.m.Y'}}</span>
+    </div>
+    <div class="card-body">
         <p>{{ news.text|truncatewords:20|censor }}</p>
     </div>
+    <div class="card-footer text-center text-muted">
+        <a href="{% url 'news_update' news.pk %}">Изменить</a> |
+        <a href="{% url 'news_delete' news.pk %}">Удалить</a>
+    </div>
+</div>
+<br/>
 {% endfor %}
 
 {% else %}
-    <h2>Новостей нет.</h2>
+<h2>Новостей нет.</h2>
 {% endif %}
 
 <div class="pagination">

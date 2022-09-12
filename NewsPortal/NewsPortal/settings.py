@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'fpages',
     'News.apps.NewsConfig',
     'whitenoise.runserver_nostatic',
+    'crispy_forms',
+    'crispy_bootstrap5',
 
     'django_filters',
     'allauth',
@@ -201,3 +203,6 @@ CACHES = {
         'TIMEOUT': 60,
     }
 }
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

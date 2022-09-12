@@ -1,0 +1,29 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Новости
+{% endblock title %}
+
+{% block content %}
+<h3> {{ news.title|censor}}</h3>
+<div>
+    <p>{{ news.date|date:'d.m.Y'}}</p>
+</div>
+<div>
+    <p>{{ news.text|censor }}</p>
+</div>
+{% if user.is_authenticated %}
+    <p>
+        {% if perms.News.change_post %}
+        <a href="{% url 'news_update' news.pk %}">Редактировать пост</a> |
+        {% endif %}
+        {% if perms.News.delete_post %}
+        <a href="{% url 'news_delete' news.pk %}">Удалить новость</a>
+        {% endif %}
+    </p>
+    <p><a href="{% url 'news_subcribe' news.id %}">Подписатся</a></p>
+{% endif %}
+{% endblock content %}
+
