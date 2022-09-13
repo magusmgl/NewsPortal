@@ -165,7 +165,7 @@ class Post(models.Model):
     def get_absolute_url(self) -> str:
         '''Получене абсолютной ссылки на кокрентую статью'''
 
-        return reverse('news', kwargs={'id': self.id})
+        return reverse('news_detail', kwargs={'id': self.id})
 
     def save(self, *args, **kwargs):
         '''
@@ -199,6 +199,17 @@ class Comment(models.Model):
     _comment_rating = models.IntegerField(default=0,
                                           db_column='rating',
                                           verbose_name='Рейтинг комментария')
+
+    class Meta:
+        '''
+        Добавление названия таблиц в админке и
+        сортировка постов по дате добавленя.
+        '''
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return self.comment_text
 
     @property
     def comment_rating(self):
