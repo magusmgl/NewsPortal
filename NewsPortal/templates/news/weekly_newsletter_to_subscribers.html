@@ -11,7 +11,7 @@
     {% for post in list_of_post %}
     <li>
         <p>{{ post.date|date:'d.m.Y' }}</p>
-        <h3><a href="http://127.0.0.1:8000{% url  'news' post.id %}">{{ post.title }}</a></h3>
+        <h3><a href="http://127.0.0.1:8000{% url  'news_detail' post.id %}">{{ post.title }}</a></h3>
         <p>{{ post.text|truncatewords:25 }}</p>
     </li>
     {% endfor %}

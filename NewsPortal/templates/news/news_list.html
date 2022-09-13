@@ -1,5 +1,4 @@
 {% extends 'flatpages/default.html' %}
-
 {% load custom_filters %}
 
 {% block title %}Новости{% endblock title %}
@@ -18,10 +17,22 @@
     </div>
     <div class="card-body">
         <p>{{ news.text|truncatewords:20|censor }}</p>
+        {% if perms.News.change_post %}
+        <a href="{% url 'news_update' news.pk %}">Изменить</a> |
+        {% endif %}
+        {% if perms.News.delete_post %}
+        <a href="{% url 'news_delete' news.pk %}">Удалить</a>
+        {% endif %}
     </div>
     <div class="card-footer text-center text-muted">
-        <a href="{% url 'news_update' news.pk %}">Изменить</a> |
-        <a href="{% url 'news_delete' news.pk %}">Удалить</a>
+        {% for comment in news.comments.all %}
+        <p>
+                <span class="font-weight-bold">
+                    {{ comment.user }} &middot;
+                </span>
+            {{ comment }}
+        </p>
+        {% endfor %}
     </div>
 </div>
 <br/>

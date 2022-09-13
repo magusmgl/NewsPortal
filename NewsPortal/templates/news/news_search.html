@@ -1,28 +1,40 @@
 {% extends 'flatpages/default.html' %}
 {% load crispy_forms_tags %}
+{% load custom_filters %}
 
 {% block content %}
-    <h1>Поиск статьей на сайте</h1>
-    <form action="" method="GET">
-        {{ filterset.form|crispy }}
-        <input type="submit" value="Найти">
-    </form>
+<h1>Поиск статьей на сайте</h1>
+<form action="" method="GET">
+    {{ filterset.form|crispy }}
+    <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+<hr>
+{% if news_list %}
 
-    {% if news_list %}
-    <ul>
-        {% for news in news_list %}
-        <li>
-            <p>{{ news.date|date:'d.m.Y' }}</p>
-            <h3><a href="{% url 'news' news.id %}">{{ news.title }}</a></h3>
-            <p>{{ news.text|truncatewords:20}}</p>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <h2>Новостей нет.</h2>
-    {% endif %}
+{% for news in news_list %}
+<div class="card">
+    <div class="card-header">
+        <span class="font-weight-bold"><a href="{{ news.get_absolute_url }}">{{ news.title|censor }}</a></span>&middot;
+        <span class="text-muted">{{ news.author }} |
+                {{news.date|date:'d.m.Y'}}</span>
+    </div>
+    <div class="card-body">
+        <p>{{ news.text|truncatewords:20|censor }}</p>
+        {% if perms.News.change_post %}
+        <a href="{% url 'news_update' news.pk %}">Изменить</a> |
+        {% endif %}
+        {% if perms.News.delete_post %}
+        <a href="{% url 'news_delete' news.pk %}">Удалить</a>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+<br/>
+{% else %}
+<h2>Новостей нет.</h2>
+{% endif %}
 
-    <div class="pagination">
+<div class="pagination">
                 <span class="step-links">
                     {% if page_obj.has_previous %}
                         <a href="?page={{ page_obj.previous_page_number }}">&laquo; Предыдущая</a>
@@ -48,5 +60,5 @@
                         <a href="?page={{ page_obj.next_page_number }}">Следующая &raquo;</a>
                     {% endif %}
                 </span>
-    </div>
+</div>
 {% endblock %}

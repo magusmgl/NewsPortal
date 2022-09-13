@@ -10,7 +10,7 @@
 <p> Вы подписались на новости: {{ categories }}.</p>
 <div>
     <p>{{ instance.date|date:'d.m.Y' }}</p>
-    <h3><a href="http://127.0.0.1:8000{% url  'news' instance.id %}">{{ instance.title }}</a></h3>
+    <h3><a href="http://127.0.0.1:8000{% url  'news_detail' instance.id %}">{{ instance.title }}</a></h3>
     <p>{{ instance.text|truncatewords:50 }}</p>
 </div>
 </body>
