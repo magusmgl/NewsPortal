@@ -3,7 +3,11 @@ from django.template.loader import render_to_string
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 
-from .models import Category, User, PostCategory
+from .models import (
+    Category,
+    User,
+    PostCategory
+)
 
 
 # @receiver(m2m_changed, sender=PostCategory)

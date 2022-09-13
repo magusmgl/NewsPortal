@@ -157,7 +157,7 @@ AUTH_USER_MODEL = 'News.User'
 
 LOGIN_REDIRECT_URL = '/profile'
 LOGIN_URL = '/accounts/login'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/news'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/news_list'
 
 # allauth settings
 ACCOUNT_EMAIL_REQUIRED = True
