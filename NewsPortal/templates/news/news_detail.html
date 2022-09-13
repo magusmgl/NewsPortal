@@ -25,7 +25,7 @@
     <a href="{% url 'news_delete' news.pk %}">Удалить новость</a>
     {% endif %}
 </p>
-<p><a href="{% url 'news_subcribe' news.id %}">Подписатся</a></p>
+<p><a href="{% url 'news_subscribe' news.id %}">Подписатся</a></p>
 {% endif %}
 
 <p>Назад к <a href="{% url 'news_list' %}">Списку новостей</a></p>
