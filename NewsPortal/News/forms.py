@@ -4,7 +4,13 @@ from django.contrib.auth.models import Group
 from allauth.account.forms import SignupForm
 from django import forms
 
-from .models import Post, Category, Author, User
+from .models import (
+    Post,
+    Category,
+    Author,
+    User,
+    Comment,
+)
 
 
 class PostForm(forms.ModelForm):
@@ -67,6 +73,7 @@ class ArticleForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
     '''Форма профиля пользовтеля '''
+
     class Meta:
         username = forms.CharField(label='Имя пользователя')
         first_name = forms.CharField(label='Имя')
@@ -99,3 +106,9 @@ class MyCustomSocialSignupForm(SignupForm):
         basic_group = Group.objects.get(name='common')
         basic_group.user_set.add(user)
         return user
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('comment_text', 'user')
