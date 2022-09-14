@@ -90,6 +90,10 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
         ordering = ['category_name']
 
+    @property
+    def number_of_subscribers(self):
+        return self.subscribers.count()
+
 
 class Post(models.Model):
     '''Модель описывает посто на сайет (новость или статья)'''

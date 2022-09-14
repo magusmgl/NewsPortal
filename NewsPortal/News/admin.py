@@ -32,9 +32,14 @@ class CategoryPostInline(admin.StackedInline):
     extra = 0
 
 
-class CategorySubcribesInline(admin.StackedInline):
+class CategorySubscribesInline(admin.StackedInline):
     model = CategorySubcribes
     fk_name = 'subcribe_user'
+    extra = 0
+
+
+class SubscribersInline(admin.StackedInline):
+    model = Category.subscribers.through
     extra = 0
 
 
@@ -92,8 +97,13 @@ class AuthorAdmin(admin.ModelAdmin):
     list_filter = ('user',)
 
 
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+admin.site.register(User, UserAdmin)
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     inlines = [
-        CategorySubcribesInline,
+        SubscribersInline,
     ]
+    exclude = ('subscribers',)
+    list_display = ('category_name', 'number_of_subscribers')
