@@ -1,8 +1,8 @@
 {% extends 'flatpages/default.html' %}
-
+{% load i18n %}
 
 {% block title %}
-Профиль
+{% trans 'User Profile' %}
 {% endblock title %}
 
 {% block content %}
@@ -10,23 +10,23 @@
 <div>
     <table>
         <tr>
-            <td>Имя:</td>
+            <td>{% trans 'First name' %}:</td>
             <td>{{ profile.first_name }}</td>
         </tr>
         <tr>
-            <td>Фамилия:</td>
+            <td>{% trans 'Last name' %}:</td>
             <td>{{ profile.last_name }}</td>
         </tr>
         <tr>
-            <td>Электронная почта:</td>
+            <td>{% trans 'Email' %}:</td>
             <td>{{ profile.email }}</td>
         </tr>
     </table>
     {% if is_not_author %}
-        <button><a href="/profile/upgrade">Стать автором</a></button>
+        <button><a class="btn btn-primary ml-2" href="/profile/upgrade">{% trans 'Become an author'%}</a></button>
     {% endif %}
-    <button><a href="/profile/edit">Настройки</a></button>
-    <button><a href="/accounts/logout">Выйти</a></button>
+    <a class="btn btn-primary ml-2" href="/profile/edit">{% trans 'Profile edit' %}</a>
+    <a class="btn btn-primary ml-2" href="/accounts/logout">{% trans 'Log out' %}</a>
 </div>
 {% endblock content %}
 

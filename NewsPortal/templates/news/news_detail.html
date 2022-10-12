@@ -1,10 +1,10 @@
 {% extends 'flatpages/default.html' %}
 {% load crispy_forms_tags %}
-
 {% load custom_filters %}
+{% load i18n %}
 
 {% block title %}
-Новости
+{% trans 'News' %}
 {% endblock title %}
 
 {% block content %}
@@ -19,29 +19,27 @@
 {% if user.is_authenticated %}
 <p>
     {% if perms.News.change_post %}
-    <a href="{% url 'news_update' news.pk %}">Редактировать пост</a> |
+    <a href="{% url 'news_update' news.pk %}">{% trans 'Edit post' %}</a> |
     {% endif %}
     {% if perms.News.delete_post %}
-    <a href="{% url 'news_delete' news.pk %}">Удалить новость</a>
+    <a href="{% url 'news_delete' news.pk %}">{% trans 'Delete news' %}</a>
     {% endif %}
 </p>
-<p><a href="{% url 'news_subscribe' news.id %}">Подписатся</a></p>
+<p><a href="{% url 'news_subscribe' news.id %}">{% trans 'Subscribe' %}</a></p>
 {% endif %}
 
-<p>Назад к <a href="{% url 'news_list' %}">Списку новостей</a></p>
-<h4>Комментарии</h4>
+<p>{% trans 'back to ' %}<a href="{% url 'news_list' %}">{% trans 'all post' %}</a></p>
+<h4>{% trans 'Comments' %}</h4>
 {% for comment in news.comments.all %}
 <p>{{comment.user}} &middot; {{ comment }}</p>
 {% endfor %}
 <hr>
 
-<h4>Добавить комментарий</h4>
+<h4>{% trans 'Add comment' %}</h4>
 <form action="" method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <button class="btn btn-success ml-2" type="submit">Сохранить</button>
+    <button class="btn btn-success ml-2" type="submit">{% trans 'Save' %}</button>
 </form>
-
-
 {% endblock content %}
 

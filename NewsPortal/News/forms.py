@@ -3,6 +3,8 @@ from django.forms import Textarea, SelectMultiple
 from django.contrib.auth.models import Group
 from allauth.account.forms import SignupForm
 from django import forms
+from django.utils.translation import gettext as _
+from django.utils.translation import pgettext_lazy
 
 from .models import (
     Post,
@@ -16,12 +18,12 @@ from .models import (
 class PostForm(forms.ModelForm):
     '''Форма поста(новости)'''
     author = forms.ModelChoiceField(queryset=Author.objects.all(),
-                                    label='Автор поста',
-                                    empty_label='-- Выберите автора --', )
+                                    label=_('Author of post'),
+                                    empty_label=_('-- choose author --'), )
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
-                                              label='Категория поста', widget=SelectMultiple(attrs={'multiple': True}))
-    title = forms.CharField(min_length=15, max_length=150, label='Заголовок поста')
-    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label='Текст поста', min_length=100)
+                                              label=_('Category of post'), widget=SelectMultiple(attrs={'multiple': True}))
+    title = forms.CharField(min_length=15, max_length=150, label=_('Title of post'))
+    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label=pgettext_lazy('text for PostForm', 'Text'), min_length=100)
 
     class Meta:
         model = Post
@@ -75,10 +77,10 @@ class ProfileForm(forms.ModelForm):
     '''Форма профиля пользовтеля '''
 
     class Meta:
-        username = forms.CharField(label='Имя пользователя')
-        first_name = forms.CharField(label='Имя')
-        last_name = forms.CharField(label='Фамилия')
-        email = forms.EmailField(label='Электронная почта')
+        username = forms.CharField(label=_('Username'))
+        first_name = forms.CharField(label=_('First name'))
+        last_name = forms.CharField(label=_('Last name'))
+        email = forms.EmailField(label=_('Email'))
 
         model = User
         fields = [

@@ -1,14 +1,27 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, FormView
+from django.views.generic.detail import SingleObjectMixin
+from django.views import View
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.core.cache import cache
 
-from .models import Post, User, CategorySubcribes, Category
+from .models import (
+    Post,
+    User,
+    CategorySubcribes,
+    Category,
+)
 from .filters import NewsFilter
-from .forms import PostForm, ArticleForm, ProfileForm
+from .forms import (
+    PostForm,
+    ArticleForm,
+    ProfileForm,
+    CommentForm,
+)
 from .tasks import mailing_subscribers_after_news_creation
 
 
@@ -22,12 +35,17 @@ class NewsList(ListView):
     paginate_by = 10
 
 
-class NewsDetail(DetailView):
+class CommentGet(DetailView):
     '''Представления для вывода конкретной новости'''
     model = Post
     template_name = 'news/news_detail.html'
     context_object_name = 'news'
     pk_url_kwarg = 'id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        return context
 
     def get_object(self, *args, **kwargs) -> None:
         '''
@@ -38,6 +56,36 @@ class NewsDetail(DetailView):
             news = super().get_object(queryset=self.queryset)
             cache.set(f'news-{self.kwargs["id"]}', news)
         return news
+
+
+class CommentPost(SingleObjectMixin, FormView):
+    model = Post
+    form_class = CommentForm
+    template_name = 'news/news_detail.html'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        comment = form.save(commit=False)
+        comment.post = self.object
+        comment.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        post = self.get_object()
+        return reverse('news_detail', kwargs={'id': post.id})
+
+
+class NewsDetail(View):
+    def get(self, request, *args, **kwargs):
+        view = CommentGet.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = CommentPost.as_view()
+        return view(request, *args, **kwargs)
 
 
 class NewsSearch(ListView):
@@ -158,4 +206,4 @@ def subscribe_to_news_category(request, post_id):
         'categories_subscribed': user.category_set.all(),
     }
 
-    return render(request, 'news/subcribe.html', context=context)
+    return render(request, 'news/subscribe.html', context=context)

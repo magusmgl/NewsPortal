@@ -1,111 +1,137 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>
-            {% block title %}
-            {% endblock title %}
-        </title>
-        <!-- Font Awesome icons (free version)-->
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
-        {% load static %}
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    </head>
-    <body>
-            {% load cache %}
-                {% cache 100 nav %}
-                <!-- Navigation-->
-                    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-                        <div class="container px-4 px-lg-5">
-                            <a class="navbar-brand" href="index.html">cb<br>.ru</a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                                Menu
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarResponsive">
-                                <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/">Главная</a></li>
-                                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/search/">Поиск</a></li>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+    <!-- Font Awesome icons (free version)-->
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+          rel="stylesheet" type="text/css"/>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+
+{% load cache %}
+{% cache 100 nav %}
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/news/">cb<br>.ru</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/">{% trans 'Home' %}</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/search/">{% trans 'Search' %}</a></li>
                 {% endcache %}
-                                    {% if perms.News.change_post %}
-                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/create/">Добавить пост</a></li>
-                                    {% endif %}
-                                    {% if user.is_authenticated %}
-                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/profile/">{{ user.username }}</a></li>
-                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/logout">Выйти</a></li>
+                {% if perms.News.change_post %}
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/news/create/">{% trans 'New post' %}</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/profile/">{{ user.username }}</a>
+                </li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/logout">{% trans 'Log out' %}</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/login">{% trans 'Log in' %}</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/signup">{% trans 'Sign up' %} </a></li>
+                {% endif %}
+                <li>
+                    <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %}
+                        <!-- Не забываем по csrf_token для POST запросов -->
+                        <input type="hidden" name="next" value="{{ redirect_to }}">
 
-                                    {% else %}
-                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/login">Войти</a></li>
-                                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/accounts/signup">Регистрация</a></li>
-                                    {% endif %}
-                                </ul>
-                            </div>
-                        </div>
-                    </nav>
+                        <select name="language" id="">
+                            {% get_available_languages as LANGUAGES %} <!-- получаем языки -->
+                            {% get_language_info_list for LANGUAGES as languages %} <!-- Помещаем их в список languages -->
 
-        <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{% static 'assets/img/home-bg.jpg' %}')">
-            {% cache 100 header %}
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>cb.ru</h1>
-                            <span class="subheading">Крупнейшая в рунете платформа для предпринимателей и высококвалифицированных специалистов малых, средних и крупных компаний</span>
-                        </div>
-                    </div>
+                            {% for language in languages %} <!-- Итерируясь по списку, выводим их название на языке пользователя и код -->
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                                {{ language.name_local }} - {{ language.code }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="set">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{% static 'assets/img/home-bg.jpg' %}')">
+    {% cache 100 header %}
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>cb.ru</h1>
+                    <span class="subheading">{% trans 'The largest platform in Runet for entrepreneurs and highly qualified specialists of small, medium and large companies' %}</span>
                 </div>
             </div>
-            {% endcache %}
-        </header>
-        <!-- Main Content-->
-        <div class="container px-4 px-lg-5">
-            {% block content %}
-            {% endblock content %}
         </div>
-        <!-- Footer-->
-        {% cache 100 footer %}
-            <footer class="border-top">
-                <div class="container px-4 px-lg-5">
-                    <div class="row gx-4 gx-lg-5 justify-content-center">
-                        <div class="col-md-10 col-lg-8 col-xl-7">
-                            <ul class="list-inline text-center">
-                                <li class="list-inline-item">
-                                    <a href="#!">
+    </div>
+    {% endcache %}
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    {% block content %}
+    {% endblock content %}
+</div>
+<!-- Footer-->
+{% cache 100 footer %}
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#!">
                                         <span class="fa-stack fa-lg">
                                             <i class="fas fa-circle fa-stack-2x"></i>
                                             <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
                                         </span>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="#!">
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#!">
                                         <span class="fa-stack fa-lg">
                                             <i class="fas fa-circle fa-stack-2x"></i>
                                             <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
                                         </span>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a href="#!">
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#!">
                                         <span class="fa-stack fa-lg">
                                             <i class="fas fa-circle fa-stack-2x"></i>
                                             <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                                         </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        {% endcache %}
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    </body>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endcache %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
 </html>

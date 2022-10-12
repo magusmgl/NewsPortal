@@ -1,13 +1,14 @@
 {% extends 'flatpages/default.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block content %}
 <hr>
-<h1>Редактирование поста</h1>
+<h1>{% trans 'Post editing' %}</h1>
 <form action="" method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <input class="btn btn-success" type="submit" value="Сохранить">
+    <input class="btn btn-success" type="submit" value="{% trans 'Save' %}">
 </form>
 <br/>
 {% endblock content %}

@@ -1,0 +1,436 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-12 07:13+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: News/filters.py:13
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "Title"
+msgctxt "text for NewsFilter"
+msgid "By title"
+msgstr "Заголовок"
+
+#: News/filters.py:16
+#, fuzzy
+#| msgid "input category name"
+msgctxt "text for NewsFilter"
+msgid "By category"
+msgstr "введите название категории"
+
+#: News/filters.py:20
+msgctxt "text for NewsFilter"
+msgid "Date of writing from"
+msgstr ""
+
+#: News/forms.py:21
+#, fuzzy
+#| msgid "choose post"
+msgid "Author of post"
+msgstr "выберите пост"
+
+#: News/forms.py:22
+#, fuzzy
+#| msgid "choose author"
+msgid "-- choose author --"
+msgstr "выберите автора"
+
+#: News/forms.py:24
+#, fuzzy
+#| msgid "enter title of post"
+msgid "Category of post"
+msgstr "введите заголовок поста"
+
+#: News/forms.py:25
+#, fuzzy
+#| msgid "enter title of post"
+msgid "Title of post"
+msgstr "введите заголовок поста"
+
+#: News/forms.py:26
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "Text"
+msgctxt "text for PostForm"
+msgid "Text"
+msgstr "Текст"
+
+#: News/forms.py:80
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "User name"
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: News/forms.py:81 templates/news/profile.html:13
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "User name"
+msgid "First name"
+msgstr "Имя"
+
+#: News/forms.py:82 templates/news/profile.html:17
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "User name"
+msgid "Last name"
+msgstr "Фамилия"
+
+#: News/forms.py:83 templates/news/profile.html:21
+msgid "Email"
+msgstr "Электронная почта"
+
+#: News/models.py:32
+msgctxt "help text for Author model"
+msgid "User name"
+msgstr "Имя пользователя"
+
+#: News/models.py:33
+msgid "choose user name from list"
+msgstr "выберите имя поьзователя из списка"
+
+#: News/models.py:36
+msgctxt "help text for Author model"
+msgid "User rating"
+msgstr "Рейтинг пользователя"
+
+#: News/models.py:37
+msgid "enter user rating"
+msgstr "введите рейтиг пользователя"
+
+#: News/models.py:79
+msgctxt "help text for Category model"
+msgid "Category name"
+msgstr "Название категории"
+
+#: News/models.py:80
+msgid "input category name"
+msgstr "введите название категории"
+
+#: News/models.py:116
+msgctxt "help text for Author model"
+msgid "Author"
+msgstr "Автор"
+
+#: News/models.py:117
+msgid "choose author"
+msgstr "выберите автора"
+
+#: News/models.py:121
+msgctxt "help text for Author model"
+msgid "Type"
+msgstr "Тип"
+
+#: News/models.py:122
+msgid "choose type post"
+msgstr "выберите тип поста"
+
+#: News/models.py:126
+msgctxt "help text for Author model"
+msgid "Date"
+msgstr "Дата"
+
+#: News/models.py:127
+msgid "enter date post"
+msgstr "укажите дату публикации поста"
+
+#: News/models.py:134
+msgctxt "help text for Author model"
+msgid "Title"
+msgstr "Заголовок"
+
+#: News/models.py:135
+msgid "enter title of post"
+msgstr "введите заголовок поста"
+
+#: News/models.py:137
+msgctxt "help text for Author model"
+msgid "Text"
+msgstr "Текст"
+
+#: News/models.py:138
+msgid "enter text"
+msgstr "введите текст поста"
+
+#: News/models.py:141
+msgctxt "help text for Author model"
+msgid "Rating"
+msgstr "Рейтинг"
+
+#: News/models.py:142
+msgid "enter rating of post"
+msgstr "укажите рейтинг поста"
+
+#: News/models.py:206
+msgctxt "help text for Comment models"
+msgid "Post"
+msgstr "Пост"
+
+#: News/models.py:207
+msgid "choose post"
+msgstr "выберите пост"
+
+#: News/models.py:211
+msgctxt "help text for Comment models"
+msgid "User"
+msgstr "Пользователь"
+
+#: News/models.py:212
+msgid "choose user"
+msgstr "выберите пользователя"
+
+#: News/models.py:214
+msgctxt "help text for Comment models"
+msgid "Comment on post"
+msgstr "Комментарии к посту"
+
+#: News/models.py:215
+msgid "enter comment on post"
+msgstr "введите комментарий к посту"
+
+#: News/models.py:220
+msgctxt "help text for Comment models"
+msgid "Comment rating"
+msgstr "Рейтинг комментария"
+
+#: News/models.py:221
+msgid "Enter comment rating"
+msgstr "укажите рейтинг комментария"
+
+#: fpages/admin.py:11
+msgid "Advanced options"
+msgstr ""
+
+#: templates/account/login.html:7
+msgid "Sign In"
+msgstr "Войти"
+
+#: templates/account/login.html:11 templates/account/login.html:44
+msgid "Войти"
+msgstr ""
+
+#: templates/account/login.html:16
+#, python-format
+msgid ""
+"\n"
+"  Пожалуйста, войдите с помощью одной из ваших существующих сторонних "
+"учетных записей. Или, <a href=\"%(signup_url)s\">зарегистрируйте</a>\n"
+"учетную запись на %(site_name)s, и выполните вход ниже:"
+msgstr ""
+
+#: templates/account/login.html:26
+msgid "или"
+msgstr ""
+
+#: templates/account/login.html:33
+#, python-format
+msgid ""
+"Если вы еще не создали учетную запись, пожалуйста, сначала\n"
+"<a href=\"%(signup_url)s\">зарегистрируйтесь</a>."
+msgstr ""
+
+#: templates/account/login.html:43
+msgid "Забыли пароль?"
+msgstr ""
+
+#: templates/account/logout.html:5
+msgid "Sign Out"
+msgstr "Выйти"
+
+#: templates/account/logout.html:8 templates/account/logout.html:17
+msgid "Выйти"
+msgstr ""
+
+#: templates/account/logout.html:10
+msgid "Вы уверены что хотите выйти?"
+msgstr ""
+
+#: templates/account/signup.html:6
+msgid "Signup"
+msgstr "Зарегистрироваться"
+
+#: templates/account/signup.html:9 templates/account/signup.html:17
+msgid "Зарегистрироваться"
+msgstr ""
+
+#: templates/account/signup.html:20
+#, python-format
+msgid ""
+"У вас уже есть аккаунт? Тогда, пожалуйста, <a href=\"%(login_url)s"
+"\">войдите</a>."
+msgstr ""
+
+#: templates/flatpages/default.html:39
+msgid "Home"
+msgstr "Главная"
+
+#: templates/flatpages/default.html:40
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/flatpages/default.html:43
+msgid "New post"
+msgstr "Новый пост"
+
+#: templates/flatpages/default.html:48 templates/news/profile.html:29
+msgid "Log out"
+msgstr "Выйти"
+
+#: templates/flatpages/default.html:50
+msgid "Log in"
+msgstr "Войти"
+
+#: templates/flatpages/default.html:51
+msgid "Sign up"
+msgstr "Зарегистироваться"
+
+#: templates/flatpages/default.html:84
+msgid ""
+"The largest platform in Runet for entrepreneurs and highly qualified "
+"specialists of small, medium and large companies"
+msgstr ""
+"Крупнейшая в рунете платформа для предпринимателей и высококвалифицированных "
+"специалистов малых, средних и крупных компаний"
+
+#: templates/news/news_delete.html:5
+msgid "Deleting a post"
+msgstr "Удаление поста"
+
+#: templates/news/news_delete.html:9
+#, fuzzy
+#| msgid "New post"
+msgid "Delete post?"
+msgstr "Удалить пост?"
+
+#: templates/news/news_delete.html:10
+msgid "Confirm"
+msgstr "Подтвердить"
+
+#: templates/news/news_detail.html:7 templates/news/news_list.html:5
+msgid "News"
+msgstr "Новости"
+
+#: templates/news/news_detail.html:22
+msgid "Edit post"
+msgstr "Редактировать пост"
+
+#: templates/news/news_detail.html:25
+#, fuzzy
+#| msgid "All news"
+msgid "Delete news"
+msgstr "Все статьи"
+
+#: templates/news/news_detail.html:28
+msgid "Subscribe"
+msgstr "Подписаться"
+
+#: templates/news/news_detail.html:31
+msgid "back to "
+msgstr "назад к "
+
+#: templates/news/news_detail.html:31
+#, fuzzy
+#| msgid "New post"
+msgid "all post"
+msgstr "всем постам"
+
+#: templates/news/news_detail.html:32
+msgid "Comments"
+msgstr "Комментарии"
+
+#: templates/news/news_detail.html:38
+msgid "Add comment"
+msgstr "Добавить комментарий"
+
+#: templates/news/news_detail.html:42 templates/news/news_edit.html:11
+#: templates/news/news_new.html:11 templates/news/profile_edit.html:11
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/news/news_edit.html:7
+msgid "Post editing"
+msgstr "Редактирование поста"
+
+#: templates/news/news_list.html:8
+msgid "All news"
+msgstr "Все статьи"
+
+#: templates/news/news_list.html:9
+msgid "Total articles"
+msgstr "Всего статей"
+
+#: templates/news/news_list.html:22 templates/news/news_search.html:24
+#, fuzzy
+#| msgid "Edit post"
+msgid "Edit"
+msgstr "Редактировать пост"
+
+#: templates/news/news_list.html:25 templates/news/news_search.html:27
+#, fuzzy
+#| msgid "All news"
+msgid "Delete"
+msgstr "Все статьи"
+
+#: templates/news/news_list.html:48 templates/news/news_search.html:39
+#, fuzzy
+#| msgid "back to "
+msgid "back"
+msgstr "назад к "
+
+#: templates/news/news_list.html:68 templates/news/news_search.html:59
+msgid "next"
+msgstr "следущая"
+
+#: templates/news/news_new.html:6
+msgid "Adding a new post "
+msgstr "Добавить новый пост"
+
+#: templates/news/news_search.html:7
+msgid "Search for articles on the site"
+msgstr "Поиск статей на сайте"
+
+#: templates/news/news_search.html:10
+msgid "Find"
+msgstr "Найти"
+
+#: templates/news/news_search.html:33
+#, fuzzy
+#| msgid "All news"
+msgid "No news"
+msgstr "Все статьи"
+
+#: templates/news/profile.html:5
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "User rating"
+msgid "User Profile"
+msgstr "Рейтинг пользователя"
+
+#: templates/news/profile.html:26
+msgid "Become an author"
+msgstr "Стать автором"
+
+#: templates/news/profile.html:28
+msgid "Profile edit"
+msgstr "Редактировать профиль"
+
+#: templates/news/profile_edit.html:6
+msgid "Edit user profile"
+msgstr "Редактировать профиль пользователя"

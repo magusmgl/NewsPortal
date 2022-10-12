@@ -1,15 +1,15 @@
 {% extends 'flatpages/default.html' %}
 {% load crispy_forms_tags %}
 {% load custom_filters %}
+{% load i18n %}
 
 {% block content %}
-<h1>Поиск статьей на сайте</h1>
+<h1>{% trans 'Search for articles on the site' %}</h1>
 <form action="" method="GET">
     {{ filterset.form|crispy }}
-    <button type="submit" class="btn btn-primary">Найти</button>
+   <button type="submit" class="btn btn-primary">{% trans 'Find' %}</button>
 </form>
 <hr>
-{% if news_list %}
 
 {% for news in news_list %}
 <div class="card">
@@ -21,23 +21,22 @@
     <div class="card-body">
         <p>{{ news.text|truncatewords:20|censor }}</p>
         {% if perms.News.change_post %}
-        <a href="{% url 'news_update' news.pk %}">Изменить</a> |
+        <a href="{% url 'news_update' news.pk %}">{% trans 'Edit' %}</a> |
         {% endif %}
         {% if perms.News.delete_post %}
-        <a href="{% url 'news_delete' news.pk %}">Удалить</a>
+        <a href="{% url 'news_delete' news.pk %}">{% trans 'Delete' %}</a>
         {% endif %}
     </div>
 </div>
-{% endfor %}
 <br/>
-{% else %}
-<h2>Новостей нет.</h2>
-{% endif %}
+{% empty %}
+<h2>{% trans 'No news' %}</h2>
+{% endfor %}
 
 <div class="pagination">
                 <span class="step-links">
                     {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}">&laquo; Предыдущая</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">&laquo; {% trans 'back' %}</a>
                         <a href="?page=1">1</a>
                         {% if page_obj.previous_page_number != 1 %}
                             ...
@@ -57,7 +56,7 @@
                         ...
                         <a href="?page={{page_obj.paginator.num_pages}}">{{ page_obj.paginator.num_pages }}</a>
                         {% endif %}
-                        <a href="?page={{ page_obj.next_page_number }}">Следующая &raquo;</a>
+                        <a href="?page={{ page_obj.next_page_number }}">{% trans 'next' %} &raquo;</a>
                     {% endif %}
                 </span>
 </div>
