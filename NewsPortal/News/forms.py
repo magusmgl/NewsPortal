@@ -21,9 +21,12 @@ class PostForm(forms.ModelForm):
                                     label=_('Author of post'),
                                     empty_label=_('-- choose author --'), )
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
-                                              label=_('Category of post'), widget=SelectMultiple(attrs={'multiple': True}))
+                                              label=_('Category of post'),
+                                              widget=SelectMultiple(attrs={'multiple': True}))
     title = forms.CharField(min_length=15, max_length=150, label=_('Title of post'))
-    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label=pgettext_lazy('text for PostForm', 'Text'), min_length=100)
+    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}),
+                           label=pgettext_lazy('text for PostForm', 'Text'),
+                           min_length=100)
 
     class Meta:
         model = Post
@@ -50,9 +53,12 @@ class ArticleForm(forms.ModelForm):
                                     label='Автор поста',
                                     empty_label='-- Выберите автора --', )
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(),
-                                              label='Категория поста', widget=SelectMultiple(attrs={'multiple': True}))
+                                              label='Категория поста',
+                                              widget=SelectMultiple(attrs={'multiple': True}))
     title = forms.CharField(min_length=15, max_length=150, label='Заголовок поста')
-    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}), label='Текст поста', min_length=100)
+    text = forms.CharField(widget=Textarea(attrs={'cols': 80, 'rows': 10}),
+                           label='Текст поста',
+                           min_length=100)
 
     class Meta:
         model = Post
