@@ -3,7 +3,6 @@ from datetime import datetime
 from django.test import TestCase, SimpleTestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
 
 from News.models import User, Author, Category, Post
 
@@ -74,8 +73,8 @@ class NewsDetailTest(TestCase):
         cls.post = Post.objects.create(author=cls.author,
                                        type='NE',
                                        date=datetime.now(),
-                                       title='политика',
-                                       text='someting text',
+                                       title='some title',
+                                       text='some text',
                                        )
         cls.post.category.add(cls.category)
 
@@ -84,12 +83,12 @@ class NewsDetailTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_post_detailview(self):
-        response = self.client.get(reverse('news',
+        response = self.client.get(reverse('news_detail',
                                            kwargs={'id': self.post.id}))
         no_response = self.client.get('/news/100000/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(no_response.status_code, 404)
-        self.assertTemplateUsed(response, 'news/news.html')
+        self.assertTemplateUsed(response, 'news/news_detail.html')
 
 
 class NewsCreateDeleteUpdateTest(TestCase):
@@ -100,25 +99,33 @@ class NewsCreateDeleteUpdateTest(TestCase):
                                                         last_name='testuser_last_name',
                                                         email='test@email.com',
                                                         password='secret')
-
         cls.author = Author.objects.create(user=cls.user)
-
         cls.category = Category.objects.create(category_name='Политика')
+        cls.post = Post.objects.create(author=cls.author,
+                                       type='NE',
+                                       date=datetime.now(),
+                                       title='Some title',
+                                       text='Some text',
+                                       )
+        cls.post.category.add(cls.category)
+        # cls.user.user_permissions.set(['News.add_post', 'News.change_post', 'News.delete_post'])
 
     # def test_post_createview(self):
+    #     # self.user.user_permissions.set('News.add_post')
+    #
     #     response = self.client.post(
-    #         reverse("news_create"),
-    #         {
-    #             "author": self.author,
-    #             'category': [self.category],
-    #             "title": "New title",
-    #             "text": "New text",
+    #         reverse('news_create'),
+    #         data={
+    #             'author': self.author,
+    #             'category': self.category,
+    #             'title': 'New title',
+    #             'text': 'New text',
     #         }, )
     #
-    #     self.assertEqual(response.status_code, 302)
-    #     print(Post.objects.all())
-    #     self.assertEqual(Post.objects.get(id=1).title, "New title")
-    #     self.assertEqual(Post.objects.get(id=1).body, "New text")
+    #     # print(f'!!!!!!!!!!!!!!!{Post.objects.all()}')
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertEqual(Post.objects.last().title, "New title")
+    #     self.assertEqual(Post.objects.last().text, "New text")
 
 
 # def test_news_createview(self):
@@ -135,21 +142,23 @@ class NewsCreateDeleteUpdateTest(TestCase):
 #     self.assertEqual(Post.objects.get(id=1).title, 'New title')
 #     self.assertEqual(Post.objects.last().text, 'New text')
 
-# def test_news_editview(self):
-#     response = self.client.post(
-#         reverse('news_update', args=2),
-#         {
-#             'title': 'Update title',
-#             'text': 'Update text',
-#         })
-#
-#     self.assertEqual(response.status_code, 302)
-#     self.assertEqual(Post.objects.last().title, 'Update title')
-#     self.assertEqual(Post.objects.last().text, 'Update text')
-#
-# def test_news_deleteview(self):
-#     response = self.client.post(reverse('news_delete'), args=1)
-#     self.assertEqual(response.status_code, 302)
+    # def test_news_editview(self):
+    #     self.client.login(username='testuser', password='secret')
+    #     response = self.client.post(
+    #         reverse('news_update', args=[1]),
+    #         {
+    #             'title': 'Update title',
+    #             'text': 'Update text',
+    #         })
+    #
+    #     self.assertEqual(response.status_code, 302)
+    #     self.assertEqual(Post.objects.last().title, 'Update title')
+    #     self.assertEqual(Post.objects.last().text, 'Update text')
+
+    # def test_news_deleteview(self):
+    #     self.client.login(username='testuser', password='secret')
+    #     response = self.client.post(reverse('news_delete'), args=[1])
+    #     self.assertEqual(response.status_code, 302)
 
 
 class NewsSearchTest(TestCase):

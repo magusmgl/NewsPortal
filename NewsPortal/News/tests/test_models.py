@@ -39,7 +39,7 @@ class AuthorModelTest(TestCase):
     def test_user_name_label(self):
         author = Author.objects.get(id=1)
         field_label = author._meta.get_field('user').verbose_name
-        self.assertEqual(field_label, 'Пользователь')
+        self.assertEqual(field_label, 'Имя пользователя')
 
     def test_user_rating_name_label(self):
         author = Author.objects.get(id=1)
@@ -64,16 +64,16 @@ class CategoryModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
-        Category.objects.create(category_name='Политика')
+        Category.objects.create(category_name='Politics')
 
     def test_category_name_content(self):
         content = Category.objects.get(id=1)
-        self.assertEqual(content.category_name, 'Политика')
+        self.assertEqual(content.category_name, 'Politics')
 
     def test_category_name_label(self):
         category = Category.objects.get(id=1)
         field_label = category._meta.get_field('category_name').verbose_name
-        self.assertEqual(field_label, 'Имя категории')
+        self.assertEqual(field_label, 'Название категории')
 
     def test_object_name_is_category_name_title(self):
         category = Category.objects.get(id=1)
@@ -124,7 +124,7 @@ class PostModelTest(TestCase):
     def test_category_name_label(self):
         post = Post.objects.get(id=1)
         field_label = post._meta.get_field('category').verbose_name
-        self.assertEqual(field_label, 'Категория')
+        self.assertEqual(field_label, 'category')
 
     def test_title_name_label(self):
         post = Post.objects.get(id=1)
@@ -138,7 +138,7 @@ class PostModelTest(TestCase):
     def test_text_name_label(self):
         post = Post.objects.get(id=1)
         field_label = post._meta.get_field('text').verbose_name
-        self.assertEqual(field_label, 'Текст поста')
+        self.assertEqual(field_label, 'Текст')
 
     def test_text_content(self):
         post = Post.objects.get(id=1)
@@ -147,7 +147,7 @@ class PostModelTest(TestCase):
     def test_post_rating_name_label(self):
         post = Post.objects.get(id=1)
         field_label = post._meta.get_field('_post_rating').verbose_name
-        self.assertEqual(field_label, 'Рейтинг поста')
+        self.assertEqual(field_label, 'Рейтинг')
 
     def test_object_name_is_post_author_comma_text_100_symbol(self):
         post = Post.objects.get(id=1)
@@ -171,7 +171,7 @@ class PostModelTest(TestCase):
 
     def test_get_absolute_url(self):
         post = Post.objects.get(id=1)
-        self.assertEqual('/news/1/', post.get_absolute_url())
+        self.assertEqual('/articles/1/', post.get_absolute_url())
 
 
 class CommentModelTest(TestCase):
@@ -212,7 +212,7 @@ class CommentModelTest(TestCase):
     def test_comment_text_name_label(self):
         comment = Comment.objects.get(id=1)
         field_label = comment._meta.get_field('comment_text').verbose_name
-        self.assertEqual(field_label, 'Комментарий к посту')
+        self.assertEqual(field_label, 'Комментарии к посту')
 
     def test_comment_content(self):
         comment = Comment.objects.get(id=1)
@@ -221,7 +221,7 @@ class CommentModelTest(TestCase):
     def test_comment_date_name_label(self):
         comment = Comment.objects.get(id=1)
         field_label = comment._meta.get_field('comment_date').verbose_name
-        self.assertEqual(field_label, 'Дата комментария')
+        self.assertEqual(field_label, 'comment date')
 
     def test_comment_rating_name_label(self):
         comment = Comment.objects.get(id=1)

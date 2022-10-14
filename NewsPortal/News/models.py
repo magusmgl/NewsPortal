@@ -20,8 +20,8 @@ class User(AbstractUser):
 
     class Meta:
         '''Добавлене названия таблиц в админке'''
-        verbose_name = pgettext_lazy('text for verbose_name of User admin','User')
-        verbose_name_plural = pgettext_lazy('text for verbose_name of User admin','Users')
+        verbose_name = pgettext_lazy('text for verbose_name of User admin', 'User')
+        verbose_name_plural = pgettext_lazy('text for verbose_name of User admin', 'Users')
 
 
 class Author(models.Model):
@@ -127,7 +127,7 @@ class Post(models.Model):
                             help_text=_('enter date post'))
     category = models.ManyToManyField(to='Category',
                                       through='PostCategory',
-                                      db_column='category',)
+                                      db_column='category', )
     title = models.CharField(default='',
                              max_length=128,
                              db_column='header',
@@ -139,7 +139,7 @@ class Post(models.Model):
     _post_rating = models.SmallIntegerField(default=0,
                                             db_column='rating',
                                             verbose_name=pgettext_lazy('help text for Author model', 'Rating'),
-                                            help_text=_('enter rating of post'),)
+                                            help_text=_('enter rating of post'), )
 
     class Meta:
         '''
@@ -214,7 +214,7 @@ class Comment(models.Model):
                                     verbose_name=pgettext_lazy('help text for Comment models', 'Comment on post'),
                                     help_text=_('enter comment on post'))
     comment_date = models.DateTimeField(auto_now_add=True,
-                                        db_column='date',)
+                                        db_column='date', )
     _comment_rating = models.IntegerField(default=0,
                                           db_column='rating',
                                           verbose_name=pgettext_lazy('help text for Comment models', 'Comment rating'),
