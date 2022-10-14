@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 12:07+0000\n"
+"POT-Creation-Date: 2022-10-14 14:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,6 +97,22 @@ msgstr "Фамилия"
 msgid "Email"
 msgstr "Электронная почта"
 
+#: News/models.py:23
+#, fuzzy
+#| msgctxt "help text for Comment models"
+#| msgid "User"
+msgctxt "text for verbose_name of User admin"
+msgid "User"
+msgstr "Пользователь"
+
+#: News/models.py:24
+#, fuzzy
+#| msgctxt "help text for Comment models"
+#| msgid "User"
+msgctxt "text for verbose_name of User admin"
+msgid "Users"
+msgstr "Пользователи"
+
 #: News/models.py:32
 msgctxt "help text for Author model"
 msgid "User name"
@@ -115,6 +131,22 @@ msgstr "Рейтинг пользователя"
 msgid "enter user rating"
 msgstr "введите рейтиг пользователя"
 
+#: News/models.py:45
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "Author"
+msgctxt "help text for verbose_name of Author admin"
+msgid "Author"
+msgstr "Автор"
+
+#: News/models.py:46
+#, fuzzy
+#| msgctxt "help text for Author model"
+#| msgid "Author"
+msgctxt "help text for verbose_name of Author admin"
+msgid "Authors"
+msgstr "Авторы"
+
 #: News/models.py:79
 msgctxt "help text for Category model"
 msgid "Category name"
@@ -123,6 +155,22 @@ msgstr "Название категории"
 #: News/models.py:80
 msgid "input category name"
 msgstr "введите название категории"
+
+#: News/models.py:94
+#, fuzzy
+#| msgctxt "help text for Category model"
+#| msgid "Category name"
+msgctxt "help text for verbose_name of Category admin"
+msgid "Category"
+msgstr "Название категории"
+
+#: News/models.py:95
+#, fuzzy
+#| msgctxt "help text for Category model"
+#| msgid "Category name"
+msgctxt "help text for verbose_name of Category admin"
+msgid "Categories"
+msgstr "Название категорий"
 
 #: News/models.py:116
 msgctxt "help text for Author model"
@@ -178,6 +226,22 @@ msgstr "Рейтинг"
 msgid "enter rating of post"
 msgstr "укажите рейтинг поста"
 
+#: News/models.py:149
+#, fuzzy
+#| msgctxt "help text for Comment models"
+#| msgid "Post"
+msgctxt "help text for verbose_name of Post admin"
+msgid "Post"
+msgstr "Пост"
+
+#: News/models.py:150
+#, fuzzy
+#| msgctxt "help text for Comment models"
+#| msgid "Post"
+msgctxt "help text for verbose_name of Post admin"
+msgid "Posts"
+msgstr "Посты"
+
 #: News/models.py:206
 msgctxt "help text for Comment models"
 msgid "Post"
@@ -213,6 +277,20 @@ msgstr "Рейтинг комментария"
 #: News/models.py:221
 msgid "Enter comment rating"
 msgstr "укажите рейтинг комментария"
+
+#: News/models.py:228
+#, fuzzy
+#| msgid "Comments"
+msgctxt "help text for verbose_name of Comment admin"
+msgid "Comment"
+msgstr "Комментарий"
+
+#: News/models.py:229
+#, fuzzy
+#| msgid "Comments"
+msgctxt "help text for verbose_name of Comment admin"
+msgid "Comments"
+msgstr "Комментарии"
 
 #: fpages/admin.py:11
 msgid "Advanced options"
@@ -277,31 +355,31 @@ msgid ""
 "\">войдите</a>."
 msgstr ""
 
-#: templates/flatpages/default.html:39
+#: templates/flatpages/default.html:45
 msgid "Home"
 msgstr "Главная"
 
-#: templates/flatpages/default.html:40
+#: templates/flatpages/default.html:46
 msgid "Search"
 msgstr "Поиск"
 
-#: templates/flatpages/default.html:43
+#: templates/flatpages/default.html:49
 msgid "New post"
 msgstr "Новый пост"
 
-#: templates/flatpages/default.html:48 templates/news/profile.html:29
+#: templates/flatpages/default.html:54 templates/news/profile.html:29
 msgid "Log out"
 msgstr "Выйти"
 
-#: templates/flatpages/default.html:50
+#: templates/flatpages/default.html:56
 msgid "Log in"
 msgstr "Войти"
 
-#: templates/flatpages/default.html:51
+#: templates/flatpages/default.html:57
 msgid "Sign up"
 msgstr "Зарегистироваться"
 
-#: templates/flatpages/default.html:84
+#: templates/flatpages/default.html:106
 msgid ""
 "The largest platform in Runet for entrepreneurs and highly qualified "
 "specialists of small, medium and large companies"
@@ -386,13 +464,13 @@ msgstr "Редактировать пост"
 #, fuzzy
 #| msgid "All news"
 msgid "Delete"
-msgstr "Все статьи"
+msgstr "Удалить"
 
 #: templates/news/news_list.html:42 templates/news/news_search.html:33
 #, fuzzy
 #| msgid "All news"
 msgid "No news"
-msgstr "Все статьи"
+msgstr "Нет новостей"
 
 #: templates/news/news_list.html:48 templates/news/news_search.html:39
 #, fuzzy
@@ -421,7 +499,7 @@ msgstr "Найти"
 #| msgctxt "help text for Author model"
 #| msgid "User rating"
 msgid "User Profile"
-msgstr "Рейтинг пользователя"
+msgstr "Профиль пользователя"
 
 #: templates/news/profile.html:26
 msgid "Become an author"
