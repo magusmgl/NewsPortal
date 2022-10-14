@@ -20,8 +20,8 @@ class User(AbstractUser):
 
     class Meta:
         '''Добавлене названия таблиц в админке'''
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        verbose_name = pgettext_lazy('text for verbose_name of User admin','User')
+        verbose_name_plural = pgettext_lazy('text for verbose_name of User admin','Users')
 
 
 class Author(models.Model):
@@ -42,8 +42,8 @@ class Author(models.Model):
 
     class Meta:
         '''Добавлене названия таблиц в админке'''
-        verbose_name = 'Автор'
-        verbose_name_plural = 'Авторы'
+        verbose_name = pgettext_lazy('help text for verbose_name of Author admin', 'Author'),
+        verbose_name_plural = pgettext_lazy('help text for verbose_name of Author admin', 'Authors')
 
     @staticmethod
     def update_rating(user) -> None:
@@ -91,8 +91,8 @@ class Category(models.Model):
         Добавление названия таблиц в админке и
         сортировка категорий по имени.
         '''
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = pgettext_lazy('help text for verbose_name of Category admin', 'Category'),
+        verbose_name_plural = pgettext_lazy('help text for verbose_name of Category admin', 'Categories')
         ordering = ['category_name']
 
     @property
@@ -146,8 +146,8 @@ class Post(models.Model):
         Добавление названия таблиц в админке и
         сортировка постов по дате добавленя.
         '''
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name = pgettext_lazy('help text for verbose_name of Post admin', 'Post'),
+        verbose_name_plural = pgettext_lazy('help text for verbose_name of Post admin', 'Posts')
         ordering = ['date']
 
     def __str__(self) -> str:
@@ -225,8 +225,8 @@ class Comment(models.Model):
         Добавление названия таблиц в админке и
         сортировка постов по дате добавленя.
         '''
-        verbose_name = 'Комментарий'
-        verbose_name_plural = 'Комментарии'
+        verbose_name = pgettext_lazy('help text for verbose_name of Comment admin', 'Comment'),
+        verbose_name_plural = pgettext_lazy('help text for verbose_name of Comment admin', 'Comments')
 
     def __str__(self):
         return self.comment_text

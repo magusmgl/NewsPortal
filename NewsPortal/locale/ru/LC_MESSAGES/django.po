@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 07:13+0000\n"
+"POT-Creation-Date: 2022-10-14 12:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -388,6 +388,12 @@ msgstr "Редактировать пост"
 msgid "Delete"
 msgstr "Все статьи"
 
+#: templates/news/news_list.html:42 templates/news/news_search.html:33
+#, fuzzy
+#| msgid "All news"
+msgid "No news"
+msgstr "Все статьи"
+
 #: templates/news/news_list.html:48 templates/news/news_search.html:39
 #, fuzzy
 #| msgid "back to "
@@ -409,12 +415,6 @@ msgstr "Поиск статей на сайте"
 #: templates/news/news_search.html:10
 msgid "Find"
 msgstr "Найти"
-
-#: templates/news/news_search.html:33
-#, fuzzy
-#| msgid "All news"
-msgid "No news"
-msgstr "Все статьи"
 
 #: templates/news/profile.html:5
 #, fuzzy

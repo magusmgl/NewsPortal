@@ -72,6 +72,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    'middlewares.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'NewsPortal.urls'

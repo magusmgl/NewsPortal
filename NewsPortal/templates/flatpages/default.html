@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load tz %}
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -10,6 +12,10 @@
         {% block title %}
         {% endblock title %}
     </title>
+     <!-- Если сейчас больше чем 19 или же меньше 7, то выводим тёмную тему, иначе выводим светлую -->
+<!--    <style>-->
+<!--        body {background-color: {% if current_time.hour >= 19 or current_time.hour <= 7 %} darkcyan {% else %} powderblue {% endif %};}-->
+<!--    </style>-->
     <!-- Font Awesome icons (free version)-->
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
@@ -68,6 +74,22 @@
                         <input type="submit" value="set">
                     </form>
                 </li>
+<!--                <lI>-->
+<!--                     {% get_current_timezone as TIME_ZONE %}-->
+<!--                    <form action="" method="POST">-->
+<!--                        {% csrf_token %}-->
+<!--                        <label for="timezone">Time zone:</label>-->
+<!--                        <select name="timezone">-->
+<!--                            {% for tz in timezones %}-->
+<!--                            <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>-->
+<!--                            {% endfor %}-->
+<!--                        </select>-->
+<!--                        <input type="submit" value="Set">-->
+<!--                    </form>-->
+
+<!--                    {{ TIME_ZONE }}-->
+<!--                    {{ current_time|timezone:TIME_ZONE }} &lt;!&ndash; Отображаем время в выбранном часовом поясе  &ndash;&gt;-->
+<!--                </lI>-->
             </ul>
         </div>
     </div>

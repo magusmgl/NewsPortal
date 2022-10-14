@@ -1,7 +1,7 @@
-from django.contrib import admin
 from django.core.paginator import Paginator
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from modeltranslation.admin import TranslationAdmin
 
 from .models import (
     User,
@@ -58,7 +58,7 @@ nullfy_posts_rating.short_description = 'Обнулить рейтинг пос�
 
 
 @admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin(TranslationAdmin):
     list_display = [field.name for field in Comment._meta.get_fields()]
     list_filter = ('user', 'comment_date',)
     search_fields = ['comment_text']
@@ -67,7 +67,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 @admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(TranslationAdmin):
     inlines = [
         CategoryPostInline,
         CommentInline,
@@ -101,7 +101,8 @@ admin.site.register(User, UserAdmin)
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslationAdmin):
+    model = Category
     inlines = [
         SubscribersInline,
     ]
