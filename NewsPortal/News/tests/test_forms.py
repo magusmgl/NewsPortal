@@ -15,27 +15,27 @@ class PostFormTest(TestCase):
                                                         password='secret')
 
         cls.author = Author.objects.create(user=cls.user)
-        cls.category = Category.objects.create(category_name='Политика')
+        cls.category = Category.objects.create(category_name='Politics')
 
     def test_post_form_author_label(self):
         form = PostForm()
-        self.assertTrue(form.fields['author'].label == None or form.fields['author'].label == 'Автор поста')
+        self.assertTrue(form.fields['author'].label == None or form.fields['author'].label == 'Author of post')
 
     def test_post_form_author_empty_label(self):
         form = PostForm()
-        self.assertTrue(form.fields['author'].empty_label == '-- Выберите автора --')
+        self.assertTrue(form.fields['author'].empty_label == '-- choose author --')
 
     def test_post_form_category_label(self):
         form = PostForm()
-        self.assertTrue(form.fields['category'].label == None or form.fields['category'].label == 'Категория поста')
+        self.assertTrue(form.fields['category'].label == None or form.fields['category'].label == 'Category of post')
 
     def test_post_form_title_label(self):
         form = PostForm()
-        self.assertTrue(form.fields['title'].label == None or form.fields['title'].label == 'Заголовок поста')
+        self.assertTrue(form.fields['title'].label == None or form.fields['title'].label == 'Title of post')
 
     def test_post_form_text_label(self):
         form = PostForm()
-        self.assertTrue(form.fields['text'].label == None or form.fields['text'].label == 'Текст поста')
+        self.assertTrue(form.fields['text'].label == None or form.fields['text'].label == 'Text')
 
     def test_post_form_text_equal_to_title(self):
         title = '_' * 150
