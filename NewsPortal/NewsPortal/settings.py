@@ -41,20 +41,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'fpages',
-    'News.apps.NewsConfig',
+
     'whitenoise.runserver_nostatic',
     'crispy_forms',
     'crispy_bootstrap5',
-
     'django_filters',
+
+    # ... include the providers you want to enable:
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # ... include the providers you want to enable:
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.yandex',
     'django_apscheduler',
+    'rest_framework',
+
+    'fpages',
+    'News.apps.NewsConfig',
+    'apis.apps.ApisConfig',
 ]
 
 SITE_ID = 1

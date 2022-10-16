@@ -20,6 +20,8 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')), # подключаем встроенные эндопинты для работы с локализацией
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('pages/', include('django.contrib.flatpages.urls')),
+    path('api/v1/', include('apis.urls')),
     path('', include('News.urls')),
     path('pages/', include('django.contrib.flatpages.urls')),
 
