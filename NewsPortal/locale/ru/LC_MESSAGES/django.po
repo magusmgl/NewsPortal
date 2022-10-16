@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-14 14:30+0000\n"
+"POT-Creation-Date: 2022-10-16 07:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,13 +58,13 @@ msgstr "выберите автора"
 msgid "Category of post"
 msgstr "введите заголовок поста"
 
-#: News/forms.py:25
+#: News/forms.py:26
 #, fuzzy
 #| msgid "enter title of post"
 msgid "Title of post"
 msgstr "введите заголовок поста"
 
-#: News/forms.py:26
+#: News/forms.py:28
 #, fuzzy
 #| msgctxt "help text for Author model"
 #| msgid "Text"
@@ -72,28 +72,28 @@ msgctxt "text for PostForm"
 msgid "Text"
 msgstr "Текст"
 
-#: News/forms.py:80
+#: News/forms.py:86
 #, fuzzy
 #| msgctxt "help text for Author model"
 #| msgid "User name"
 msgid "Username"
 msgstr "Имя пользователя"
 
-#: News/forms.py:81 templates/news/profile.html:13
+#: News/forms.py:87 templates/news/profile.html:13
 #, fuzzy
 #| msgctxt "help text for Author model"
 #| msgid "User name"
 msgid "First name"
 msgstr "Имя"
 
-#: News/forms.py:82 templates/news/profile.html:17
+#: News/forms.py:88 templates/news/profile.html:17
 #, fuzzy
 #| msgctxt "help text for Author model"
 #| msgid "User name"
 msgid "Last name"
 msgstr "Фамилия"
 
-#: News/forms.py:83 templates/news/profile.html:21
+#: News/forms.py:89 templates/news/profile.html:21
 msgid "Email"
 msgstr "Электронная почта"
 
@@ -367,19 +367,23 @@ msgstr "Поиск"
 msgid "New post"
 msgstr "Новый пост"
 
-#: templates/flatpages/default.html:54 templates/news/profile.html:29
+#: templates/flatpages/default.html:50
+msgid "New article"
+msgstr "Новая статья"
+
+#: templates/flatpages/default.html:55 templates/news/profile.html:29
 msgid "Log out"
 msgstr "Выйти"
 
-#: templates/flatpages/default.html:56
+#: templates/flatpages/default.html:57
 msgid "Log in"
 msgstr "Войти"
 
-#: templates/flatpages/default.html:57
+#: templates/flatpages/default.html:58
 msgid "Sign up"
 msgstr "Зарегистироваться"
 
-#: templates/flatpages/default.html:106
+#: templates/flatpages/default.html:107
 msgid ""
 "The largest platform in Runet for entrepreneurs and highly qualified "
 "specialists of small, medium and large companies"
@@ -407,13 +411,11 @@ msgstr "Новости"
 
 #: templates/news/news_detail.html:22
 msgid "Edit post"
-msgstr "Редактировать пост"
+msgstr "Редактировать"
 
 #: templates/news/news_detail.html:25
-#, fuzzy
-#| msgid "All news"
 msgid "Delete news"
-msgstr "Все статьи"
+msgstr "Удалить"
 
 #: templates/news/news_detail.html:28
 msgid "Subscribe"
@@ -424,8 +426,6 @@ msgid "back to "
 msgstr "назад к "
 
 #: templates/news/news_detail.html:31
-#, fuzzy
-#| msgid "New post"
 msgid "all post"
 msgstr "всем постам"
 
@@ -455,10 +455,8 @@ msgid "Total articles"
 msgstr "Всего статей"
 
 #: templates/news/news_list.html:22 templates/news/news_search.html:24
-#, fuzzy
-#| msgid "Edit post"
 msgid "Edit"
-msgstr "Редактировать пост"
+msgstr "Редактировать"
 
 #: templates/news/news_list.html:25 templates/news/news_search.html:27
 #, fuzzy
@@ -473,14 +471,12 @@ msgid "No news"
 msgstr "Нет новостей"
 
 #: templates/news/news_list.html:48 templates/news/news_search.html:39
-#, fuzzy
-#| msgid "back to "
 msgid "back"
-msgstr "назад к "
+msgstr "В начало"
 
 #: templates/news/news_list.html:68 templates/news/news_search.html:59
 msgid "next"
-msgstr "следущая"
+msgstr "дальше"
 
 #: templates/news/news_new.html:6
 msgid "Adding a new post "
