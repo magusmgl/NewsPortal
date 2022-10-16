@@ -171,7 +171,7 @@ class PostModelTest(TestCase):
 
     def test_get_absolute_url(self):
         post = Post.objects.get(id=1)
-        self.assertEqual('/articles/1/', post.get_absolute_url())
+        self.assertEqual('/news/1/', post.get_absolute_url())
 
 
 class CommentModelTest(TestCase):

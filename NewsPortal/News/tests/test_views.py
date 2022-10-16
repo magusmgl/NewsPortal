@@ -30,7 +30,7 @@ class NewsListTests(TestCase):
                                 )
 
     def test_view_url_exists_at_correct_loction(self):
-        response = self.client.get('/news/')
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
     def test_view_url_available_by_name(self):
@@ -164,7 +164,7 @@ class NewsCreateDeleteUpdateTest(TestCase):
 class NewsSearchTest(TestCase):
 
     def test_url_exists_at_correct_loction(self):
-        respounce = self.client.get('/news/search/')
+        respounce = self.client.get('/search/')
         self.assertEqual(respounce.status_code, 200)
 
     def test_url_available_by_name(self):
