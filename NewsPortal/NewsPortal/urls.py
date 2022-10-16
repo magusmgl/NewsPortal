@@ -15,14 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# from rest_framework import routers
+
+from News import views
+
+# router = routers.DefaultRouter()
+# router.register(r'author', views.AuthorViewSet)
+# router.register(r'post', views.PostViewSet)
+# router.register(r'comment', views.CommentViewSet)
 
 urlpatterns = [
-    path('i18n/', include('django.conf.urls.i18n')), # подключаем встроенные эндопинты для работы с локализацией
     path('admin/', admin.site.urls),
+    # path('', include(router.urls)),
+    # path('api-auth/', include('rest_frameworks.urls', namespace='rest_framework')),
+    path('i18n/', include('django.conf.urls.i18n')), # подключаем встроенные эндопинты для работы с локализацией
     path('accounts/', include('allauth.urls')),
     path('pages/', include('django.contrib.flatpages.urls')),
     path('api/v1/', include('apis.urls')),
     path('', include('News.urls')),
-    path('pages/', include('django.contrib.flatpages.urls')),
-
 ]
