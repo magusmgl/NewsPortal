@@ -1,4 +1,6 @@
-import pytz #  импортируем стандартный модуль для работы с часовыми поясами
+import pytz  # импортируем стандартный модуль для работы с часовыми поясами
+# from rest_framework import viewsets
+# from rest_framework import permissions
 
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, redirect, render
@@ -13,10 +15,12 @@ from django.contrib.auth.models import Group
 from django.core.cache import cache
 
 from .models import (
+    Author,
     Post,
     User,
     CategorySubcribes,
     Category,
+    Comment,
 )
 from .filters import NewsFilter
 from .forms import (
@@ -26,6 +30,10 @@ from .forms import (
     CommentForm,
 )
 from .tasks import mailing_subscribers_after_news_creation
+# serializers import (
+#     AuthorSerializer,
+#     PostSerializer,
+#     CommentSerializer)
 
 
 # Create your views here.
@@ -40,14 +48,13 @@ class NewsList(ListView):
     def get_context_data(self, **kwargs):
         curent_time = timezone.now()
         context = super().get_context_data(**kwargs)
-        context['current_time']  =timezone.now()
-        context['timezones']=  pytz.common_timezones  # добавляем в контекст все доступные часовые пояса
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones  # добавляем в контекст все доступные часовые пояса
         return context
 
     def post(self, request):
         request.session['django_timezone'] = request.POST['timezone']
-        return redirect('/news')
-
+        return redirect('/')
 
 
 class CommentGet(DetailView):
@@ -222,3 +229,17 @@ def subscribe_to_news_category(request, post_id):
     }
 
     return render(request, 'news/subscribe.html', context=context)
+
+
+# class AuthorViewSet(viewsets.ModelViewSet):
+#     queryset = Author.objects.all()
+#     serializer_class = AuthorSerializer
+#
+# class PostViewSet(viewsets.ModelViewSet):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+#
+# class CommentViewSet(viewsets.ModelViewSet):
+#     queryset = Comment.objects.all()
+#     serializer_class = CommentSerializer
+
